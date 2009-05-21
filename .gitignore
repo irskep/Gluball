@@ -1,0 +1,11 @@
+*.DS_Store
+*.pyc
+*build/
+build/*
+dist/
+gw0rp/
+config
+py2app*
+pyglet/*
+psyco/*
+yaml/*

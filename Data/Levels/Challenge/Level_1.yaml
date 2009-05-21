@@ -1,0 +1,14 @@
+- !Env
+  background_image: floor_tile
+  height: 2000
+  player_angle: 1.5700000000000001
+  player_config: normal
+  player_x: 575
+  player_y: 293
+  prim_color: !!python/tuple [0, 0, 0, 255]
+  width: 2000
+- !Line {collides: true, obj_id: 1, visible: true, x1: 350, x2: 450, y1: 350, y2: 100}
+- !Line {collides: true, obj_id: 2, visible: true, x1: 450, x2: 700, y1: 100, y2: 100}
+- !Line {collides: true, obj_id: 3, visible: true, x1: 700, x2: 800, y1: 100, y2: 350}
+- !PlasmaTurret1 {base_rotation: 74.494955817687696, base_type: Scaffold, obj_id: 4,
+  rotation: 74.494955817687696, x: 461, y: 800}
