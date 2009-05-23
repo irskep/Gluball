@@ -1,12 +1,10 @@
 import os, sys, math, yaml
 import pyglet, pymunk
-import body, decal, enemy, event, mappings, obstacle, unit
+import body, decal, event, mappings, unit
 import objloaders, saveloaders, shapeloaders
-from util import env, gui, resources, music, sound
+from util import env, resources, music, sound
 from util import physics, serialize, settings
 from util import save as savegame
-from util.serialize import *
-from collections import defaultdict
 from pyglet.window import key
 
 width = 50*40
