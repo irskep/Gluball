@@ -197,8 +197,8 @@ class Turret(yaml_obj):
         self.base_type = base_type
         self.base_rotation = base_rotation
 
-class PlasmaTurret1(Turret):
-    yaml_tag = u"!PlasmaTurret1"
+class NormalTurretA(Turret):
+    yaml_tag = u"!NormalTurretA"
 
 class FreeThruster(SimpleObject):
     yaml_tag = u"!FreeThruster"

@@ -57,7 +57,7 @@ id_table = {
 turrets = []
 
 turret_bases = [
-    ('turret_base', 'Scaffold'),
+    ('turret_base', 'normal'),
     ('Tower1_Static', 'MetalTower'),
     ('Tower2_Static', 'ConcreteTower')
 ]
@@ -81,7 +81,7 @@ def init():
         BRAIN:      [r.core,            FreeGluballBrain, r.t_core_8]
     }
     turrets = [
-        ('turret1', PlasmaTurret1)
+        ('turret1', NormalTurretA)
     ]
     for k in sorted([k for k, v in resources.__dict__.items()]):
         print k
@@ -303,11 +303,11 @@ def load(path):
     upper_group = pyglet.graphics.OrderedGroup(5)
     
     turret_table = {
-        u"!PlasmaTurret1": 0
+        u"!NormalTurretA": 0
     }
     
     base_table = {
-        'Scaffold': 0,
+        'normal': 0,
         'MetalTower': 1,
         'ConcreteTower': 2,
         '': 0

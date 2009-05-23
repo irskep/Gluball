@@ -3,17 +3,32 @@
   height: 2000
   player_angle: 1.5700000000000001
   player_config: normal
-  player_x: 575
-  player_y: 293
+  player_x: 892
+  player_y: 198
   prim_color: !!python/tuple [0, 0, 0, 255]
   width: 2000
-- !Line {collides: true, obj_id: 1, visible: true, x1: 350, x2: 450, y1: 350, y2: 100}
-- !Line {collides: true, obj_id: 2, visible: true, x1: 450, x2: 700, y1: 100, y2: 100}
-- !Line {collides: true, obj_id: 3, visible: true, x1: 700, x2: 800, y1: 100, y2: 350}
-- !key {number: 0, obj_id: 9, x: 1035, y: 659}
-- !PlasmaTurret1 {base_rotation: 74.494955817687696, base_type: Scaffold, obj_id: 4,
-  rotation: 74.494955817687696, x: 461, y: 800}
-- !FreeDecoy {obj_id: 5, rotation: -117.43972794819932, x: 949, y: 426}
-- !FreeBomb {obj_id: 6, rotation: -24.087452308632294, x: 1140, y: 580}
-- !FreeRepair {obj_id: 8, rotation: 0, x: 267, y: 538}
-- !ImageDoor {key: 0, obj_id: 7, rotation: -21.401744362704445, x: 382, y: 607}
+- !key {number: 0, obj_id: 6, x: 1113, y: 191}
+- !key {number: 0, obj_id: 7, x: 894, y: 70}
+- !Line {collides: true, obj_id: 16, visible: true, x1: 1450, x2: 1350, y1: 400, y2: 150}
+- !Line {collides: true, obj_id: 17, visible: true, x1: 1600, x2: 1550, y1: 200, y2: 450}
+- !Line {collides: true, obj_id: 18, visible: true, x1: 1300, x2: 1600, y1: 500, y2: 550}
+- !Line {collides: true, obj_id: 19, visible: true, x1: 1500, x2: 1650, y1: 150, y2: 100}
+- !Circle {collides: true, obj_id: 20, radius: 50.0, visible: true, x: 1700, y: 400}
+- !Circle {collides: true, obj_id: 21, radius: 70.710678118654755, visible: true,
+  x: 1700, y: 600}
+- !NormalTurretA {base_rotation: 0, base_type: normal, obj_id: 1, rotation: 0, x: 230,
+  y: 425}
+- !NormalTurretA {base_rotation: 0, base_type: normal, obj_id: 2, rotation: 0, x: 471,
+  y: 329}
+- !NormalTurretA {base_rotation: 0, base_type: normal, obj_id: 3, rotation: 0, x: 606,
+  y: 522}
+- !ImageDoor {key: 0, obj_id: 4, rotation: -5.1325544398729672, x: 779, y: 485}
+- !ImageDoor {key: 0, obj_id: 5, rotation: -3.3093362760633225, x: 934, y: 356}
+- !FreeThruster {obj_id: 8, rotation: 0, x: 206, y: 123}
+- !FreeThruster {obj_id: 9, rotation: 90.0, x: 337, y: 130}
+- !FreeDecoy {obj_id: 10, rotation: -0.0, x: 151, y: 213}
+- !FreeDecoy {obj_id: 11, rotation: 0, x: 277, y: 244}
+- !FreeBomb {obj_id: 12, rotation: 0, x: 422, y: 56}
+- !FreeBomb {obj_id: 13, rotation: 0, x: 522, y: 145}
+- !FreeRepair {obj_id: 14, rotation: 0, x: 653, y: 91}
+- !FreeRepair {obj_id: 15, rotation: 0, x: 674, y: 153}

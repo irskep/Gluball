@@ -1,7 +1,7 @@
 import pyglet, math, pymunk
 from util import draw, env, particle, physics
 from util import resources, sound, serialize
-import level, unit, bullet, event
+import bullet, event, level, mappings, unit
 
 def get_target(x, y, target):
     d1 = (x-target.x)*(x-target.x) + (y-target.y)*(y-target.y)
@@ -14,7 +14,7 @@ def get_target(x, y, target):
 
 class Turret(pyglet.sprite.Sprite):
     def __init__(
-                self, img, unit_class, x, y, rotation, bullet_class, obj_id=0,
+                self, img, x, y, rotation, bullet_class, obj_id=0,
                 base_img=None, base_rotation=0.0
             ):
         if base_img != None:
@@ -31,7 +31,6 @@ class Turret(pyglet.sprite.Sprite):
         
         self.turret_type = "Untyped"
         
-        self.unit_class = unit_class
         self.bullet_class = bullet_class
         self.rotation = rotation
         self.obj_id = obj_id
@@ -231,8 +230,9 @@ class Turret(pyglet.sprite.Sprite):
         physics.space.remove(self.segment)
         physics.body_update_list.remove(self)
         self.alive = False
+        unit_class = getattr(unit, self.__class__.__name__)
         new_obj = level.add_free_object(
-            self.unit_class, self.x, self.y, -self.rotation, self.obj_id
+            unit_class, self.x, self.y, -self.rotation, self.obj_id
         )
         new_obj.health = new_obj.health_full*0.2
         sound.play(resources.turret_rip)
@@ -264,20 +264,20 @@ class Turret(pyglet.sprite.Sprite):
         physics.space.add(self.segment)
     
 
-class PlasmaTurret1(Turret):
+class NormalTurretA(Turret):
     def __init__(self, x, y, rotation, obj_id=0, base_img=None,
                 base_rotation=0.0
             ):
         img = resources.turret1
-        super(PlasmaTurret1, self).__init__(
-            resources.turret1, unit.NormalTurretA, x, y, 
-            rotation, bullet.EnemyPlasmaOrange, obj_id, base_img, base_rotation
+        super(NormalTurretA, self).__init__(
+            resources.turret1, x, y, rotation, bullet.EnemyPlasmaOrange, 
+            obj_id, base_img, base_rotation
         )
         
         self.turret_type = "Turret"
     
     def fire(self):
-        fired = super(PlasmaTurret1, self).spawn_bullet()
+        fired = super(NormalTurretA, self).spawn_bullet()
         if fired: sound.play(resources.laser_3)
     
 

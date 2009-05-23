@@ -2,9 +2,11 @@ from util import resources, particle
 
 door_types = {}
 unit_images = {}
+turret_yaml_types = []
+unit_special_cases = {}
 
 def init():
-    global door_types, unit_images
+    global door_types, unit_images, turret_yaml_types, unit_special_cases
     particle.fire_image = resources.fire
     door_types[0] = {
         'closed_static': resources.Door_red_closed,
@@ -20,8 +22,8 @@ def init():
         Unit =              None,
         Beacon =            resources.beacon_1, 
         NormalTurretA =     resources.turret1, 
-        Bomb =              resources.bomb_static,
-        Bomb_active =       resources.bomb_static,
+        Bomb =              resources.bomb_off,
+        Bomb_active =       resources.bomb_on,
         Brain =             resources.core,
         Cargo =             resources.cargo,
         Decoy =             resources.decoy_off,
@@ -33,4 +35,10 @@ def init():
         Thruster_on =       resources.thruster_on,
         Toxin =             resources.Harvester_1
     )
+    turret_yaml_types = [
+        u'!NormalTurretA'
+    ]
+    unit_special_cases = {
+        u"!FreeTurret": 'NormalTurretA'
+    }
     

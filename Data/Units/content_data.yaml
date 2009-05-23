@@ -65,6 +65,7 @@
 - !center_prefixes
   prefixes:
   - beacon
+  - bomb
   - cargo
   - core
   - decoy
@@ -114,11 +115,3 @@
 - !alias
   original: logic
   name: logic_static
-
-- !alias
-  original: poewr
-  name: bomb_active
-
-- !alias
-  original: power
-  name: bomb_static

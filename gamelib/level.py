@@ -4,7 +4,7 @@ import pyglet, pymunk
 from util import draw, env, gui, resources, music, sound
 from util import physics, serialize, settings, widget
 from util import save as savegame
-import unit, body, bullet, enemy, obstacle, event
+import body, bullet, enemy, event, mappings, obstacle, unit
 import yaml
 from pyglet.window import key
 from yamlobjects import *
@@ -203,29 +203,6 @@ def get_background(name):
 
 def load_yaml_objects(yaml_objects):
     global player_start_x, player_start_y, player_start_angle, player_config
-    free_object_table = {
-        u"!FreeThruster": unit.Thruster,
-        u"!FreeDecoy": unit.Decoy,
-        u"!FreeShield": unit.Shield,
-        u"!FreeRepair": unit.Repair,
-        u"!FreeBeacon": unit.Beacon,
-        u"!FreeToxin": unit.Toxin,
-        u"!FreeGluballBrain": unit.GluballBrain,
-        u"!FreeBomb": unit.Bomb,
-        u"!FreeTurret": unit.NormalTurretA,
-        u"!FreeCargo": unit.Cargo
-    }
-    
-    turret_table = {
-        u"!PlasmaTurret1": enemy.PlasmaTurret1
-    }
-    
-    turret_base_table = {
-        'Scaffold': resources.turret_base,
-        'MetalTower': resources.Tower1_Static,
-        'ConcreteTower': resources.Tower2_Static,
-        '': resources.turret_base
-    }
     
     for obj in yaml_objects:
         if obj.yaml_tag == u"!Env":
@@ -260,22 +237,26 @@ def load_yaml_objects(yaml_objects):
                 getattr(resources, obj.img_name), obj.x, obj.y, 
                 obj.rotation, obj.obj_id, obj.scale, obj.overhead
             )
-        elif obj.yaml_tag in free_object_table.keys():
-            add_free_object(
-                free_object_table[obj.yaml_tag], 
-                obj.x, obj.y, obj.rotation, obj.obj_id
-            )
         elif obj.yaml_tag == u"!DestructibleWall":
             new_door = obstacle.DestructibleWall(
                 obj.x, obj.y, obj.rotation, obj.img_name, obj.obj_id
             )
-        elif obj.yaml_tag in turret_table.keys():
+        elif obj.yaml_tag.startswith(u"!Free"):
+            try:
+                unitclass = mappings.unit_special_cases[obj.yaml_tag]
+            except:
+                unitclass = obj.yaml_tag[5:]
+            add_free_object(
+                getattr(unit, unitclass), 
+                obj.x, obj.y, obj.rotation, obj.obj_id
+            )
+        elif obj.yaml_tag in mappings.turret_yaml_types:
             if not hasattr(obj, 'base_type'):
-                obj.base_type = 'Scaffold'
+                obj.base_type = 'normal'
                 obj.base_rotation = 0.0
-            new_static_object = turret_table[obj.yaml_tag](
+            new_static_object = getattr(enemy, obj.yaml_tag[1:])(
                 obj.x, obj.y, obj.rotation, obj.obj_id,
-                turret_base_table[obj.base_type], obj.base_rotation
+                getattr(resources, "turret_base_"+obj.base_type), obj.base_rotation
             )
 
 def load_geometry(yaml_objects):
@@ -424,7 +405,7 @@ def make_turret(obj):
     if obj == None: return None
     turret_class = None
     turret_dict = {
-        "Turret": enemy.PlasmaTurret1
+        "Turret": enemy.NormalTurretA
     }
     if obj.turret_type in turret_dict.keys():
         turret_class = turret_dict[obj.turret_type]
