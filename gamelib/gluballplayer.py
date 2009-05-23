@@ -249,7 +249,7 @@ class GluballPlayer():
         draw.set_color(1,1,1,1)
         level.background_image.blit_tiled(0, 0, 0, level.width, level.height)
         gl.glLineWidth(3.0)
-        level.batch.draw()
+        env.batch.draw()
         particle.draw()
         
         if debug_draw:

@@ -83,8 +83,6 @@ def init():
     turrets = [
         ('turret1', NormalTurretA)
     ]
-    for k in sorted([k for k, v in resources.__dict__.items()]):
-        print k
 
 class SimpleObjectSprite(pyglet.sprite.Sprite):
     def __init__(self, obj_id, x, y, rotation, obj_type):
@@ -255,7 +253,7 @@ def draw_level_objects():
             draw.set_color(*colors[True])
             graphics.set_line_width(1.0)
             draw.line(obj.x1, obj.y1, obj.x2, obj.y2)
-        elif obj.yaml_tag == u"!key":
+        elif obj.yaml_tag == u"!Key":
             draw.set_color(1,1,1,1)
             resources.key_images[obj.number].blit(obj.x, obj.y)
             
@@ -327,7 +325,7 @@ def load(path):
             primitives.append(obj)
             add_label(str(obj.obj_id), obj.x, obj.y, obj)
         
-        if obj.yaml_tag == u"!key":
+        if obj.yaml_tag == u"!Key":
             primitives.append(obj)
             add_label(str(obj.obj_id), obj.x-5, obj.y+5, obj)
         

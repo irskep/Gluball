@@ -21,7 +21,6 @@ class Fire:
 
 class FireManager:
     def __init__(self, x, y, num=30, speed=150.0, spread=15.0, decay=100.0):
-        print speed
         self.delete_me = False
         self.goodies = []
         self.batch = pyglet.graphics.Batch()
@@ -90,7 +89,6 @@ def update():
     for fire in to_remove:
         fires.remove(fire)
         del fire
-        print len(fires)
 
 def draw():
     for fire in fires:

@@ -3,7 +3,7 @@ import pyglet, math, os
 pyglet.options['debug_gl'] = False
 
 from gamelib.util import env, gui, music, particle, resources, save, settings
-from gamelib import bullet, gluballplayer, event, level, mappings
+from gamelib import bullet, gluballplayer, guicards, event, level, mappings
 
 from pyglet import gl
 from pyglet.window import key
@@ -76,8 +76,8 @@ class GluballWindow(pyglet.window.Window):
     def init_gui(self):
         self.mode = GUI
         gui.window = self
-        gui.cards['start'] = gui.Card(level.start_widgets())
-        gui.cards['save'] = gui.Card(level.save_widgets())
+        gui.cards['start'] = gui.Card(guicards.start_widgets())
+        gui.cards['save'] = gui.Card(guicards.save_widgets())
         gui.cards['instructions'] = gui.Card(gui.instruction_widgets())
         gui.cards['settings'] = gui.Card(gui.settings_widgets())
         gui.cards['title'] = gui.Card(gui.title_widgets())

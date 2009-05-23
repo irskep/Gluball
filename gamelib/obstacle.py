@@ -8,7 +8,7 @@ class Destructible(pyglet.sprite.Sprite):
         self.normal_img = normal_img
         self.exploded_img = exploded_img
         super(Destructible, self).__init__(
-            self.normal_img, x, y, batch=level.batch, group=level.tank_group
+            self.normal_img, x, y, batch=env.batch, group=env.tank_group
         )
         self.rotation = rot
         
@@ -180,7 +180,7 @@ class FloatingObject(pyglet.sprite.Sprite):
         if radius == 0: radius = img.height*0.48
         if mass == 0: mass = physics.default_mass
         super(FloatingObject, self).__init__(
-            img, x, y, batch=level.batch, group=level.unit_group
+            img, x, y, batch=env.batch, group=env.unit_group
         )
         self.rotation = rot
         self.obj_id = obj_id
@@ -226,7 +226,7 @@ class ImageDoor(pyglet.sprite.Sprite):
         self.xm = (x + self.x2)/2
         self.ym = (y + self.y2)/2
         super(ImageDoor, self).__init__(
-            image, x, y, batch=level.batch, group=level.door_group
+            image, x, y, batch=env.batch, group=env.door_group
         )
         self.rotation = rotation
         
@@ -368,8 +368,8 @@ class Door(object):
     def close(self):
         self.closed = True
         if self.visible:
-            self.vertex_list = level.batch.add(
-                2, pyglet.gl.GL_LINES, level.floor_group,
+            self.vertex_list = env.batch.add(
+                2, pyglet.gl.GL_LINES, env.floor_group,
                 ('v2i', (self.x1, self.y1, self.x2, self.y2)), 
                 ('c4f', resources.key_colors[self.key]*2))
         physics.space.add_static(self.segment)

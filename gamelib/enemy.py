@@ -20,13 +20,13 @@ class Turret(pyglet.sprite.Sprite):
         if base_img != None:
             self.base_sprite = pyglet.sprite.Sprite(
                 base_img, x, y, 
-                batch=level.batch, group=level.tank_group
+                batch=env.batch, group=env.tank_group
             )
             self.base_sprite.rotation = base_rotation
         else:
             self.base_sprite = None
         super(Turret, self).__init__(
-            img, x, y, batch=level.batch, group=level.bullet_group #stupid
+            img, x, y, batch=env.batch, group=env.bullet_group #stupid
         )
         
         self.turret_type = "Untyped"
@@ -195,7 +195,7 @@ class Turret(pyglet.sprite.Sprite):
         py = self.y + offset[1] + my*amt
         vx = mx*self.bullet_class.velocity
         vy = my*self.bullet_class.velocity
-        self.bullet_class(px, py, vx, vy, level.batch, level.bullet_group)
+        self.bullet_class(px, py, vx, vy, env.batch, env.bullet_group)
         return True
     
     def handle_collision(self, other_unit):    

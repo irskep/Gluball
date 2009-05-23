@@ -1,6 +1,6 @@
+import pyglet
 from pyglet.window import key
 from collections import defaultdict
-from pyglet import gl
 
 fullscreen = False
 profiler = None
@@ -23,9 +23,31 @@ cvy = 1
 
 key_bindings = defaultdict(list)
 
+batch = None
+floor_group = None
+decal_group = None
+tank_group = None
+bullet_group = None
+unit_group = None
+door_group = None
+overlay_group = None
+prim_color = (0,0,0,1)
+
 def init():
     global key_bindings
     key_bindings = defaultdict(list)
+
+def init_graphics():
+    global batch, floor_group, decal_group, tank_group, unit_group, door_group
+    global bullet_group, overlay_group
+    batch = pyglet.graphics.Batch()
+    floor_group = pyglet.graphics.OrderedGroup(0)
+    decal_group = pyglet.graphics.OrderedGroup(1)
+    tank_group = pyglet.graphics.OrderedGroup(2)
+    unit_group = pyglet.graphics.OrderedGroup(3)
+    door_group = pyglet.graphics.OrderedGroup(4)
+    bullet_group = pyglet.graphics.OrderedGroup(5)
+    overlay_group = pyglet.graphics.OrderedGroup(6)
 
 def move_camera(x, y):
     global camera_x, camera_y
@@ -37,10 +59,10 @@ def move_camera(x, y):
     if abs(camera_y-camera_target_y) <= cvy: camera_y = camera_target_y
 
 def scale():
-    gl.glScalef(scale_factor,scale_factor,1)
+    pyglet.gl.glScalef(scale_factor,scale_factor,1)
 
 def apply_camera():
-    gl.glTranslatef( -camera_x+norm_w//2+sidebar_w//2, -camera_y+norm_h//2,0)
+    pyglet.gl.glTranslatef( -camera_x+norm_w//2+sidebar_w//2, -camera_y+norm_h//2,0)
 
 def clean_key_string(string):
     if string == "LSHIFT": return "Shift"

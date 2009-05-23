@@ -14,7 +14,7 @@ class Unit(pyglet.sprite.Sprite):
             img = mappings.unit_images[self.__class__.__name__]
         
         super(Unit, self).__init__(
-            img, batch=level.batch, group=level.unit_group
+            img, batch=env.batch, group=env.unit_group
         )
         
         self.label = "Generic Unit"
@@ -432,7 +432,7 @@ class Drone(pyglet.sprite.Sprite):
     def __init__(self, patient):
         super(Drone, self).__init__(
             resources.drone, patient.x, patient.y,
-            batch=level.batch, group=level.unit_group
+            batch=env.batch, group=env.unit_group
         )
         self.patient = patient
     
@@ -569,7 +569,7 @@ class Turret(Unit):
         blx = self.offset[0] + tx*amt
         bly = self.offset[1] + ty*amt
         bx, by = self.gluebody.body.local_to_world((blx, bly))
-        self.bullet_class(bx, by, vx, vy, level.batch, level.bullet_group)
+        self.bullet_class(bx, by, vx, vy, env.batch, env.bullet_group)
     
     def update(self):
         super(Turret, self).update()
@@ -654,13 +654,13 @@ class Thruster(Unit):
         
         self.flame_sprite = pyglet.sprite.Sprite(
             resources.engine_flame_1, self.x, self.y,
-            batch=level.batch, group=level.door_group
+            batch=env.batch, group=env.door_group
         )
         self.flame_sprite.visible = False
     
     def migrate(self):
         self.flame_sprite.batch = None
-        self.flame_sprite.batch = level.batch
+        self.flame_sprite.batch = env.batch
     
     def thrust(self, angle, force):
         impulse = ( force*env.dt*math.cos(angle+math.pi),

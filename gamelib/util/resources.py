@@ -120,7 +120,7 @@ def parse_yaml(yaml_objects):
     global key_images, key_colors
     loaded_objects = []
     for obj in yaml_objects:
-        if obj.yaml_tag == u"!key":
+        if obj.yaml_tag == u"!Key":
             key_images[obj.tag] = globals()[obj.image]
             key_colors[obj.tag] = tuple(obj.color)
         elif obj.yaml_tag == u'!anchor':

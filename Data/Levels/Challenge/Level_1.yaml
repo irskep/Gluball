@@ -7,8 +7,8 @@
   player_y: 198
   prim_color: !!python/tuple [0, 0, 0, 255]
   width: 2000
-- !key {number: 0, obj_id: 6, x: 1113, y: 191}
-- !key {number: 0, obj_id: 7, x: 894, y: 70}
+- !Key {number: 0, obj_id: 6, x: 1113, y: 191}
+- !Key {number: 0, obj_id: 7, x: 894, y: 70}
 - !Line {collides: true, obj_id: 16, visible: true, x1: 1450, x2: 1350, y1: 400, y2: 150}
 - !Line {collides: true, obj_id: 17, visible: true, x1: 1600, x2: 1550, y1: 200, y2: 450}
 - !Line {collides: true, obj_id: 18, visible: true, x1: 1300, x2: 1600, y1: 500, y2: 550}
