@@ -1,6 +1,5 @@
 import time, pyglet, os, math
-import level
-import gluballplayer
+import decal, gluballplayer, level
 from util import gui, env, music, physics, resources, save
 from collections import defaultdict
 
@@ -295,7 +294,7 @@ def get_object(obj_id, search_units=True, search_bodies=True, search_decals=True
             if hasattr(body, 'obj_id'):
                 if body.obj_id == obj_id: return body
     if search_decals:
-        for decal in level.decals:
+        for decal in decal.decals:
             if decal.obj_id == obj_id: return decal
     return None
 
@@ -347,7 +346,7 @@ def show_ai_message(msg, duration = 5.0, head='vn4n'):
 
 def make_invisible(obj_id):
     obj = None
-    for decal in level.decals:
+    for decal in decal.decals:
         if decal.obj_id == obj_id: obj = decal
     for body in physics.body_update_list:
         if hasattr(body, 'obj_id'):
@@ -359,7 +358,7 @@ def make_invisible(obj_id):
 
 def make_visible(obj_id):
     obj = None
-    for decal in level.decals:
+    for decal in decal.decals:
         if decal.obj_id == obj_id: obj = decal
     for body in physics.body_update_list:
         if hasattr(body, 'obj_id'):

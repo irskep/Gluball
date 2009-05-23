@@ -1,7 +1,7 @@
 import pyglet, math, pymunk
 from util import draw, env, particle, physics
 from util import resources, sound, serialize
-import bullet, event, level, mappings, unit
+import bullet, decal, event, level, mappings, unit
 
 def get_target(x, y, target):
     d1 = (x-target.x)*(x-target.x) + (y-target.y)*(y-target.y)
@@ -178,8 +178,8 @@ class Turret(pyglet.sprite.Sprite):
                 for func in event.destroy_funcs[self.obj_id]:
                     result = func()
             if self.base_sprite != None:
-                level.decals.append(
-                    level.Decal(self.base_sprite.image, self.x, self.y, self.base_sprite.rotation)
+                decal.decals.append(
+                    decal.Decal(self.base_sprite.image, self.x, self.y, self.base_sprite.rotation)
                 )
                 self.base_sprite.delete()
             self.visible = False

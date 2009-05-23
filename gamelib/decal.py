@@ -1,5 +1,5 @@
 import pyglet
-from util import env
+from util import env, serialize
 
 decals = []
 class Decal(pyglet.sprite.Sprite):
@@ -19,7 +19,7 @@ class Decal(pyglet.sprite.Sprite):
         decals.append(self)
     
     def get_yaml_object(self):
-        return YamlDecal(
+        return serialize.YamlDecal(
             obj_id = self.obj_id,
             name=self.image.instance_name,
             x=self.x,

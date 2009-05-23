@@ -1,6 +1,6 @@
 import os, sys, math, yaml
 import pyglet, pymunk
-import body, decal, event, mappings, unit
+import body, decal, enemy, event, mappings, unit
 import objloaders, saveloaders, shapeloaders
 from util import env, resources, music, sound
 from util import physics, serialize, settings
@@ -302,10 +302,10 @@ def save(dest = ""):
         po = event.point_object.obj_id
     except:
         po = 0
-    decal_obj = YamlDecalInvisList(
+    decal_obj = serialize.YamlDecalInvisList(
         [d.obj_id for d in decal.decals if not d.visible]
     )
-    event_obj = YamlEventData(
+    event_obj = serialize.YamlEventData(
         active_countdown=event.active_countdown,
         ai_message=event.ai_message,
         ai_message_queue=event.ai_message_queue_as_strings(),
@@ -329,7 +329,7 @@ def save(dest = ""):
         timed_funcs=event.timed_funcs_as_strings()
     )
     save_list = physics.body_update_list + decal.decals
-    level_obj = YamlLevelData(level_dir, current_level)
+    level_obj = serialize.YamlLevelData(level_dir, current_level)
     yaml_list = [level_obj, event_obj]
     serialize.save(
         level_dir, current_level, save_list, save_path, yaml_list

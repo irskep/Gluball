@@ -1,7 +1,7 @@
 import pyglet, pymunk, math, random
 from util import draw, env, physics, resources, serialize, sound
 from mappings import door_types
-import level
+import decal, level
 
 class Destructible(pyglet.sprite.Sprite):
     def __init__(self, x, y, rot, normal_img, exploded_img):
@@ -43,7 +43,7 @@ class Destructible(pyglet.sprite.Sprite):
         self.should_explode = False
         self.remove_shapes()
         physics.body_update_list.remove(self)
-        new_decal = level.Decal(
+        new_decal = decal.Decal(
             self.exploded_img, self.x, self.y, self.rotation, self.obj_id
         )
         self.delete()
@@ -212,12 +212,15 @@ class ImageDoor(pyglet.sprite.Sprite):
         self.obj_id = obj_id
         self.key = key
         
+        print 0
         self.range_sq = 300*300
         
         if door_types[self.key]['underlay'] != None:
-            level.decals.append(
-                level.Decal(door_types[self.key]['underlay'], x, y, rotation)
+            decal.decals.append(
+                decal.Decal(door_types[self.key]['underlay'], x, y, rotation)
             )
+        
+        print 1
         
         image = door_types[self.key]['open_static']
         self.door_width = image.width-image.anchor_x*2
@@ -228,6 +231,7 @@ class ImageDoor(pyglet.sprite.Sprite):
         super(ImageDoor, self).__init__(
             image, x, y, batch=env.batch, group=env.door_group
         )
+        print 2
         self.rotation = rotation
         
         self.segment = pymunk.Segment(
@@ -236,6 +240,8 @@ class ImageDoor(pyglet.sprite.Sprite):
         self.segment.collision_type = physics.WALL
         self.segment.elasticity = physics.default_elasticity
         self.segment.parent = self
+        
+        print 3
         
         self.manual = manual
         self.closed = False
@@ -247,6 +253,8 @@ class ImageDoor(pyglet.sprite.Sprite):
             door_types[self.key]['open_static']
         
         physics.body_update_list.append(self)
+        
+        print 4
     
     def get_yaml_object(self):
         return serialize.YamlImageDoor(
