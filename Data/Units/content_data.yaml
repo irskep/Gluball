@@ -77,32 +77,32 @@
   - thruster
 
 
-- !Key
+- !key
   tag: 0
   image: Key_R
   color: [1, 0, 0, 1]
 
-- !Key
+- !key
   tag: 1
   image: Key_O
   color: [1, 0.5, 0, 1]
 
-- !Key
+- !key
   tag: 2
   image: Key_Y
   color: [1, 1, 0, 1]
 
-- !Key
+- !key
   tag: 3
   image: Key_G
   color: [0, 1, 0, 1]
 
-- !Key
+- !key
   tag: 4
   image: Key_B
   color: [0, 0, 1, 1]
 
-- !Key
+- !key
   tag: 5
   image: Key_P
   color: [0.5, 0.1, 1, 1]

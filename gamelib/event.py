@@ -36,7 +36,7 @@ message_countdown = 0.0
 ai_message = ""
 ai_message_queue = []
 ai_message_countdown = 0.0
-ai_head = resources.core6
+ai_head = None
 
 timed_funcs = []
 cutscene_queue = []
@@ -62,6 +62,7 @@ def init():
     global cutscene_queue, timed_funcs, event_time, damage_funcs
     global end_game, start_countdown, quake_level, point_object
     global keep_ship_config, keep_ship_velocity, active_countdown, level_start_time
+    global ai_head
     
     fade_out_countdown = -100
     stay_black = False
@@ -86,6 +87,7 @@ def init():
     ai_message = ""
     ai_message_queue = []
     ai_message_countdown = 0
+    ai_head = resources.core6
     
     timed_funcs = []
     event_time = 0.0

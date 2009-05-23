@@ -5,7 +5,7 @@ I suppose that in a perfect world, some sort of overall code summary would go he
 """
 
 import pyglet
-from leveleditorlibs import graphics, PaintingEnvironment, settings, resources
+from leveleditorlibs import graphics, level, PaintingEnvironment, settings, resources
 
 class LevelEditorWindow(pyglet.window.Window):
     def __init__(self):
@@ -21,6 +21,15 @@ class LevelEditorWindow(pyglet.window.Window):
         self.set_caption('gluball Level Editor')
         self.init_cursors()
         self.init_gl()
+        
+        resources.load(
+            ['Backgrounds', 'Base', 'Decals', 'Destructible', 'Doors', 'Enemies', 'Units'],
+            prefix="Data/"
+        )
+        resources.load(
+            ['Button Images', 'Resources', 'Tool Resources'], prefix="Editor/"
+        )
+        level.init()
         
         self.painting_environment = PaintingEnvironment.PaintingEnvironment()
         self.push_handlers(self.painting_environment)

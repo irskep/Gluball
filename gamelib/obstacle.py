@@ -2,6 +2,21 @@ import pyglet, pymunk, math, random
 from util import draw, env, physics, resources, serialize, sound
 import level
 
+door_types = {}
+
+def init():
+    global door_types
+    door_types[0] = {
+        'closed_static': resources.Door_red_closed,
+        'open_static': resources.Door_red_open,
+        'open_anim': resources.Door_red_open,
+        'close_anim': resources.Door_red_closed,
+        'underlay': resources.Door_red_open,
+        'sound': resources.blast_door_quick_1,
+        'collision_delay_open': 0,
+        'collision_delay_close': 0
+    }
+
 class Destructible(pyglet.sprite.Sprite):
     def __init__(self, x, y, rot, normal_img, exploded_img):
         self.normal_img = normal_img
@@ -213,39 +228,12 @@ class ImageDoor(pyglet.sprite.Sprite):
         
         self.range_sq = 300*300
         
-        self.image_table = {
-            0: 'Door2_R_',
-            3: 'Door3_G_',
-            4: 'Door1_B_',
-            5: 'Door2_P_'
-        }
-        self.sound_table = {
-            0: resources.blast_door_quick_1,
-            3: resources.blast_door_slow,
-            4: resources.blast_door_quick_2,
-            5: resources.blast_door_quick_1
-        }
-        self.open_delay_table = {
-            0: 1.0,
-            3: 3.0,
-            4: 2.0,
-            5: 1.0
-        }
-        self.close_delay_table = {
-            0: 0.1,
-            3: 0.5,
-            4: 0.1,
-            5: 0.1
-        }
-        
-        level.decals.append(
-            level.Decal(
-                getattr(resources, self.image_table[self.key]+"under"), 
-                x, y, rotation
+        if door_types[self.key]['underlay'] != None:
+            level.decals.append(
+                level.Decal(door_types[self.key]['underlay'], x, y, rotation)
             )
-        )
         
-        image = getattr(resources, self.image_table[self.key]+"Static")
+        image = door_types[self.key]['open_static']
         self.door_width = image.width-image.anchor_x*2
         self.x2 = x + self.door_width*math.cos(-math.radians(rotation))
         self.y2 = y + self.door_width*math.sin(-math.radians(rotation))
@@ -268,9 +256,9 @@ class ImageDoor(pyglet.sprite.Sprite):
         self.physically_closed = False
         self.swap_countdown = -100
         if closed:
-            self.close(True)
+            self.close(fast=True)
         else:    
-            self.image = getattr(resources, self.image_table[self.key]+"Open")
+            door_types[self.key]['open_static']
         
         physics.body_update_list.append(self)
     
@@ -298,9 +286,9 @@ class ImageDoor(pyglet.sprite.Sprite):
             self.swap_countdown -= env.dt
             if self.swap_countdown <= 0:
                 if self.closed:
-                    self.close(True)
+                    self.close(fast=True)
                 else:
-                    self.open(True)
+                    self.open(fast=True)
                 self.swap_countdown = -100
     
     def update_physics(self):
@@ -313,12 +301,11 @@ class ImageDoor(pyglet.sprite.Sprite):
         if not self.closed:
             self.closed = True
             if fast:
-                suffix = "Static"
+                self.image = door_types[self.key]['closed_static']
             else:
-                suffix = "close_anim"
-                sound.play(self.sound_table[self.key])
-                self.swap_countdown = self.close_delay_table[self.key]
-            self.image = getattr(resources, self.image_table[self.key]+suffix)
+                self.image = door_types[self.key]['close_anim']
+                sound.play(door_types[self.key]['sound'])
+                self.swap_countdown = door_types[self.key]['collision_delay_close']
     
     def open(self, fast=False):
         if fast and self.physically_closed:
@@ -327,12 +314,11 @@ class ImageDoor(pyglet.sprite.Sprite):
         if self.closed:
             self.closed = False
             if fast:
-                suffix = "Open"
+                self.image = door_types[self.key]['open_static']
             else:
-                suffix = "open_anim"
-                sound.play(self.sound_table[self.key])
-                self.swap_countdown = self.open_delay_table[self.key]
-            self.image = getattr(resources, self.image_table[self.key]+suffix)
+                self.image = door_types[self.key]['open_anim']
+                sound.play(door_types[self.key]['sound'])
+                self.swap_countdown = door_types[self.key]['collision_delay_open']
     
     def draw_collisions(self):
         if self.physically_closed:

@@ -1,196 +1,206 @@
 """
-Load resources with minimal effort.
+ResourceVault 0.3
+Steve Johnson
+srj15@case.edu
+www.steveasleep.com
+This code is in the public domain. Do whatever you like with it.
+Attribution would be nice.
 
-    1. Drop this module into your game folder.
-    
-    2. Tweak resource_paths.
-    
-    3. Insert custom resource loading (streaming sounds, fonts).
-    
-    4. Import the module.
-    
-    5. Refer to images and sounds as resources.your_resource. Automatically updates
-        when you add new resources to your folder.
+The fancy stuff requires yaml, but without it, your resources are still loaded automagically.
 """
 
-import pyglet, os, yaml
-vb = True
-def repr_for_obj(obj):
-    sl = ['%s(']
-    vl = [obj.__class__.__name__]
-    
-    for k, v in obj.__dict__.items():
-        sl.append(k + "=%r, ")
-        vl.append(v)
-    sl[-1] = sl[-1][:-2]
-    sl.append(')')
-    return_str = ''.join(sl) % tuple(vl)
-    return return_str
+import pyglet, os
 
-class alias(yaml.YAMLObject):
-    yaml_tag = u"!alias"
-    def __init__(self, name, original):
-        self.name = name
-        self.original = original
-        self.__repr__ = repr_for_obj(self)
-    
+key_images = {}
+key_colors = {}
 
-class anchor(yaml.YAMLObject):
-    yaml_tag = u"!anchor"
-    def __init__(self, point, images):
-        self.point = point
-        self.images = images
-        self.__repr__ = repr_for_obj(self)
-    
-
-class animation(yaml.YAMLObject):
-    yaml_tag = u"!animation"
-    def __init__(self, name, period, mirror, loop, images):
-        self.name = name
-        self.period = period
-        self.mirror = mirror
-        self.loop = loop
-        self.images = images
-        self.__repr__ = repr_for_obj(self)
-    
-
-class background(yaml.YAMLObject):
-    yaml_tag = u"!background"
-    def __init__(self, name):
-        self.name = name
-        self.__repr__ = repr_for_obj(self)
-    
-
-class center_prefixes(yaml.YAMLObject):
-    yaml_tag = u"!center_prefixes"
-    def __init__(self, prefixes):
-        self.prefixes = images
-        self.__repr__ = repr_for_obj(self)
-    
-
-class key(yaml.YAMLObject):
-    yaml_tag = u"!key"
-    def __init__(self, tag, image, color):
-        self.tag = tag
-        self.image = image
-        self.color = color
-        self.__repr__ = repr_for_obj(self)
-    
-
-class text_sound(yaml.YAMLObject):
-    yaml_tag = u"!text_sound"
-    def __init__(self, name, sound):
-        self.name = name
-        self.original = sound
-        self.__repr__ = repr_for_obj(self)
-    
-
-supported_image_formats = [
-    'bmp','dds','exif','gif','jpg','jpeg','jp2','jpx','pcx','png',
-    'pnm','ras','tga','tif','tiff','xbm', 'xpm'
-]
-
-#Change this to fit your folder structure
-resource_paths = [
-    ''.join(['Data/', f]) for f in \
-    ['Backgrounds', 'Decals', 'Doors', 'Enemies', 'Graphics', 
-    'Music', 'Sounds', 'Units']
-]
-
-resource_paths.extend([
-    ''.join(['Editor/', f]) for f in \
-    ['Button Images', 'Resources', 'Tool Resources']
-])
-
-exclude = []
-
-loaded = False
+def load_font(name):
+    pyglet.resource.add_font(name)
+    return pyglet.font.load(name)
 
 function_pairs = {
     #'ext':(func, {args})
     'mp3':(pyglet.resource.media,{'streaming':True}),
     'ogg':(pyglet.resource.media,{'streaming':True}),
-    'wav':(pyglet.resource.media,{'streaming':False})
+    'wav':(pyglet.resource.media,{'streaming':False}),
+    'ttf':(load_font, {})
 }
 
-pyglet.resource.path = resource_paths
-pyglet.resource.reindex()
 #Make default function for images be pyglet.resource.image().
+supported_image_formats = [
+    'bmp','dds','exif','gif','jpg','jpeg','jp2','jpx','pcx','png',
+    'pnm','ras','tga','tif','tiff','xbm', 'xpm'
+]
 for ext in supported_image_formats:
     if not ext in function_pairs.keys():
         function_pairs[ext] = (pyglet.resource.image,{})
 
-#Then a miracle occurs!
-decals = []
-for path in pyglet.resource.path:
-    for file_name in os.listdir(path):
-        name, ext = os.path.splitext(file_name)
-        if name not in exclude:
-            if vb: print 'loading', name
-            for key, (func, kwargs) in function_pairs.iteritems():
-                if ext == '.'+key and os.path.exists(path):
-                    new = func(file_name,**kwargs)
-                    globals()[name] = new
-                    new.instance_name = name
-                    new.folder = os.path.split(path)[-1]
-                    if new.folder == 'Decals':
-                        new.anchor_x = new.width/2
-                        new.anchor_y = new.height/2
-                        decals.append(name)
+loaded_items = {}
 
-background_images = {}
-key_images = {}
-key_colors = {}
-text_sounds = {}
+imported_yaml = False
+try:
+    import yaml
+    def repr_for_obj(obj):
+        """
+        Makes a repr function for an object that recreates it when exec'd.
+        The class's constructor must take all of its attributes as arguments.
+        """
+        sl = ['%s(']
+        vl = [obj.__class__.__name__]
+        
+        for k, v in obj.__dict__.items():
+            sl.append(k + "=%r, ")
+            vl.append(v)
+        sl[-1] = sl[-1][:-2]
+        sl.append(')')
+        return_str = ''.join(sl) % tuple(vl)
+        return return_str
+    
+    class alias(yaml.YAMLObject):
+        yaml_tag = u"!alias"
+        def __init__(self, name, original):
+            self.name = name
+            self.original = original
+            self.__repr__ = repr_for_obj(self)
+    
 
-stream = file(os.path.join('Data','content_data.yaml'), 'r')
-yaml_objects = [obj for obj in yaml.load(stream) if obj != None]
-stream.close()
+    class anchor(yaml.YAMLObject):
+        yaml_tag = u"!anchor"
+        def __init__(self, point, images):
+            self.point = point
+            self.images = images
+            self.__repr__ = repr_for_obj(self)
+    
 
-stream = file(os.path.join('Editor','content_data.yaml'), 'r')
-yl = yaml.load(stream)
-if yl != None:
-    yaml_objects.extend([obj for obj in yl if obj != None])
-stream.close()
+    class animation(yaml.YAMLObject):
+        yaml_tag = u"!animation"
+        def __init__(self, name, period, mirror, loop, images):
+            self.name = name
+            self.period = period
+            self.mirror = mirror
+            self.loop = loop
+            self.images = images
+            self.__repr__ = repr_for_obj(self)
+    
 
-for obj in yaml_objects:
-    if obj.yaml_tag == u'!anchor':
-        if vb: print 'anchor', obj
-        for img in obj.images:
-            if img in globals():
-                globals()[img].anchor_x = obj.point[0]
-                globals()[img].anchor_y = obj.point[1]
-    elif obj.yaml_tag == u"!animation":
-        if vb: print 'anim', obj, obj.name
-        img_list = [globals()[img] for img in obj.images if img in globals()]
-        if obj.mirror:
-            k = len(img_list)
-            for i in xrange(1,k-1):
-                img_list.insert(k, img_list[i])
-        new_anim = pyglet.image.Animation.from_image_sequence(
-            img_list, obj.period, loop=obj.loop
-        )
-        globals()[obj.name] = new_anim
-    elif obj.yaml_tag == u"!alias":
-        if vb: print 'alias', obj, obj.name
-        if obj.original in globals():
-            globals()[obj.name] = globals()[obj.original]
-    elif obj.yaml_tag == u"!background":
-        if vb: print 'bg', obj, obj.name
-        new_tile = pyglet.image.TileableTexture.create_for_image(
-            globals()[obj.name]
-        )
-        background_images[obj.name] = new_tile
-    elif obj.yaml_tag == u"!center_prefixes":
-        for k, v in globals().items():
-            if hasattr(v, 'instance_name'):
-                for prefix in obj.prefixes:
-                    if v.instance_name.startswith(prefix):
-                        v.anchor_x, v.anchor_y = v.width//2, v.height//2
-    elif obj.yaml_tag == u"!key":
-        if vb: print 'key', obj, obj.tag
-        key_images[obj.tag] = globals()[obj.image]
-        key_colors[obj.tag] = tuple(obj.color)
-    elif obj.yaml_tag == u"!text_sound":
-        if vb: print 'sound', obj, obj.name
-        text_sounds[obj.name] = globals()[obj.sound]
+    class auto_anim(yaml.YAMLObject):
+        yaml_tag = u"!auto_anim"
+        def __init__(self, name, period, mirror, loop, prefix):
+            self.name = name
+            self.period = period
+            self.mirror = mirror
+            self.loop = loop
+            self.prefix = prefix
+            self.__repr__ = repr_for_obj(self)
+    
+
+    class center_prefixes(yaml.YAMLObject):
+        yaml_tag = u"!center_prefixes"
+        def __init__(self, prefixes):
+            self.prefixes = images
+            self.__repr__ = repr_for_obj(self)
+    
+    imported_yaml = True
+except:
+    imported_yaml = False #we'll just not do all that YAML stuff then, I suppose
+
+def make_anim(img_list, mirror, loop, period):
+    if mirror:
+        k = len(img_list)
+        for i in xrange(1,k-1):
+            img_list.insert(k, img_list[i])
+    new_anim = pyglet.image.Animation.from_image_sequence(
+        img_list, period, loop=loop
+    )
+    new_anim.width = img_list[0].width
+    new_anim.height = img_list[0].height
+    return new_anim
+
+def parse_yaml(yaml_objects):
+    global key_images, key_colors
+    loaded_objects = []
+    for obj in yaml_objects:
+        if obj.yaml_tag == u"!key":
+            key_images[obj.tag] = globals()[obj.image]
+            key_colors[obj.tag] = tuple(obj.color)
+        elif obj.yaml_tag == u'!anchor':
+            for img in obj.images:
+                if img in globals():
+                    globals()[img].anchor_x = obj.point[0]
+                    globals()[img].anchor_y = obj.point[1]
+        elif obj.yaml_tag == u"!animation":
+            img_list = [globals()[img] for img in obj.images if img in globals()]
+            new_anim = make_anim(img_list, obj.mirror, obj.loop, obj.period)
+            new_anim.instance_name = obj.name
+            globals()[obj.name] = new_anim
+            loaded_objects.append(obj.name)
+        elif obj.yaml_tag == u"!auto_anim":
+            img_list = []
+            i = 1
+            if globals().has_key(obj.prefix+"0"):
+                i = 0
+            while globals().has_key(obj.prefix + str(i)):
+                img_list.append(globals()[obj.prefix + str(i)])
+                i += 1
+            new_anim = make_anim(img_list, obj.mirror, obj.loop, obj.period)
+            new_anim.instance_name = obj.name
+            globals()[obj.name] = new_anim
+            loaded_objects.append(obj.name)
+        elif obj.yaml_tag == u"!alias":
+            if obj.original in globals():
+                globals()[obj.name] = globals()[obj.original]
+                loaded_objects.append(obj.name)
+        elif obj.yaml_tag == u"!center_prefixes":
+            for k, v in globals().items():
+                if hasattr(v, 'instance_name'):
+                    for prefix in obj.prefixes:
+                        if v.instance_name.startswith(prefix) \
+                                and not isinstance(v, pyglet.image.Animation):
+                            try:
+                                v.anchor_x, v.anchor_y = v.width//2, v.height//2
+                            except:
+                                pass #don't care. it's probably a sound.
+    return loaded_objects
+
+def load(resource_paths=['.'], exclude=[], prefix=''):
+    global loaded_items
+    resource_paths = [''.join([prefix, f]) for f in resource_paths]
+    pyglet.resource.path = resource_paths
+    pyglet.resource.reindex()
+    
+    for path in pyglet.resource.path:
+        yaml_objects = []
+        loaded_objects = []
+        for file_name in os.listdir(path):
+            name, ext = os.path.splitext(file_name)
+            if name not in exclude:
+                for key, (func, kwargs) in function_pairs.iteritems():
+                    if ext == '.'+key and os.path.exists(path):
+                        #At this point we have the directory, file name, file type, 
+                        #   loader function, and loader arguments.
+                        #Load the file
+                        new = func(file_name,**kwargs)
+                        #Sanitize the string...sort of
+                        var_name = name.replace(' ', '_')
+                        #Add the name to the global dictionary
+                        globals()[var_name] = new
+                        #Tell it what it's called, just in case
+                        #(this is mostly a remnant of a hacky bit of gw0rp)
+                        new.instance_name = name
+                        #Tell it where it came from
+                        new.parent_folder = os.path.split(path)[-1]
+                        #Keep track of it for later
+                        loaded_objects.append(var_name)
+        if imported_yaml:
+            yamlpath = os.path.join(path,'content_data.yaml')
+            if os.path.exists(yamlpath):
+                stream = file(yamlpath, 'r')
+                yaml_objects = [obj for obj in yaml.load(stream) if obj != None]
+                stream.close()
+                loaded_objects.extend(parse_yaml(yaml_objects))
+        loaded_items[path] = loaded_objects
+
+def unload(resource_path):
+    for name in loaded_items[resource_path]:
+        del globals()[name]
+    del loaded_items[resource_path]

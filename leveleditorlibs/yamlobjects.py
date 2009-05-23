@@ -81,7 +81,7 @@ class ImageDoor(yaml_obj):
     
 
 class Key(yaml_obj):
-    yaml_tag = u"!Key"
+    yaml_tag = u"!key"
     def __init__(self, obj_id, x, y, number):
         self.obj_id = obj_id
         self.x = x

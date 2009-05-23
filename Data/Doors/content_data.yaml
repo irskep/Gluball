@@ -1,4 +1,10 @@
 - !anchor
+  point: [0, 15]
+  images:
+  - Door_red_open
+  - Door_red_closed
+
+- !anchor
   point: [0, 26]
   images: 
   - Door2_R_Static

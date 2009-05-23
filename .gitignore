@@ -9,3 +9,5 @@ py2app*
 pyglet/*
 psyco/*
 yaml/*
+gluball/*
+

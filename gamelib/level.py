@@ -28,16 +28,6 @@ overlay_group = None
 decals = []
 
 background_image = None
-background_cache = {}
-background_tiled = False
-background_scale = 1.0
-
-big_backgrounds = [
-    'level_2e',
-    'level_2f',
-    'level_3f',
-    'level_5'
-]
 
 current_level = ""
 level_dir = ""
@@ -47,7 +37,7 @@ entry_points = []
 restart_countdown = -1
 
 player = None
-decoy_present = False
+decoy_present = 0
 decoy_x = 0
 decoy_y = 0
 mass = 0
@@ -120,15 +110,15 @@ def init_player(x, y, angle, config='normal'):
     
     if config == 'enhanced_1' or config == 'enhanced_3':
         repair = unit.Repair(None, (40, 0), 0, obj_id=-6)
-        gun_left = unit.BlueTurret(None, (55, 30), 10, obj_id=-7)
-        gun_right = unit.BlueTurret(None, (55, -30), -10, obj_id=-8)
+        gun_left = unit.NormalTurretA(None, (55, 30), 10, obj_id=-7)
+        gun_right = unit.NormalTurretA(None, (55, -30), -10, obj_id=-8)
         new_shapes.extend([repair, gun_left, gun_right])
         env.bind_keys([key.SPACE], gun_left)
         env.bind_keys([key.SPACE], gun_right)
     if config == 'enhanced_2':
         repair = unit.Repair(None, (40, 0), 0, obj_id=-6)
-        gun_left = unit.BlueTurret(None, (55, 30), 10, obj_id=-7)
-        gun_right = unit.BlueTurret(None, (55, -30), -10, obj_id=-8)
+        gun_left = unit.NormalTurretA(None, (55, 30), 10, obj_id=-7)
+        gun_right = unit.NormalTurretA(None, (55, -30), -10, obj_id=-8)
         thruster_left_out = unit.Thruster(None, (-27,81), -20, obj_id=-9)
         thruster_right_out = unit.Thruster(None, (-27,-81), 20, obj_id=-10)
         new_shapes.extend([repair, thruster_right_out, thruster_left_out, gun_left, gun_right])
@@ -209,23 +199,7 @@ def add_free_object(Class, x, y, rot, obj_id=0):
     return free_unit
 
 def get_background(name):
-    global background_tiled, background_scale
-    background_tiled = False
-    #HACKY HAX
-    new_bg = getattr(resources, name)()
-    if name in big_backgrounds:
-        background_scale = 2.0
-    else:
-        background_scale = 1.0
-    #END HACKY HAX
-    if width <= new_bg.width and height <= new_bg.height or name in big_backgrounds:
-        return new_bg
-    background_tiled = True
-    if name not in background_cache:
-        background_cache[name] = pyglet.image.TileableTexture.create_for_image(
-            new_bg
-        )
-    return background_cache[name]
+    return pyglet.image.TileableTexture.create_for_image(getattr(resources, name))
 
 def load_yaml_objects(yaml_objects):
     global player_start_x, player_start_y, player_start_angle, player_config
@@ -238,12 +212,12 @@ def load_yaml_objects(yaml_objects):
         u"!FreeToxin": unit.Toxin,
         u"!FreeGluballBrain": unit.GluballBrain,
         u"!FreeBomb": unit.Bomb,
-        u"!FreeTurret": unit.BlueTurret,
+        u"!FreeTurret": unit.NormalTurretA,
         u"!FreeCargo": unit.Cargo
     }
     
     turret_table = {
-        u"!PlasmaTurret1": enemy.BluePlasmaTurret
+        u"!PlasmaTurret1": enemy.PlasmaTurret1
     }
     
     turret_base_table = {
@@ -271,7 +245,7 @@ def load_yaml_objects(yaml_objects):
             new_door = obstacle.ImageDoor(
                 obj.x, obj.y, obj.rotation, obj.obj_id, obj.key
             )
-        elif obj.yaml_tag == u"!Key":
+        elif obj.yaml_tag == u"!key":
             free_unit = unit.Key(
                 number=obj.number, obj_id=obj.obj_id
             )
@@ -430,7 +404,7 @@ def unit_from_dict(unit_dict):
         "Repair": unit.Repair,
         "Beacon": unit.Beacon,
         "Bomb": unit.Bomb,
-        "BlueTurret": unit.BlueTurret,
+        "NormalTurretA": unit.NormalTurretA,
         "Cargo": unit.Cargo
     }
     if unit_dict['ClassName'] == 'Key':
@@ -450,7 +424,7 @@ def make_turret(obj):
     if obj == None: return None
     turret_class = None
     turret_dict = {
-        "Blue Plasma": enemy.BluePlasmaTurret
+        "Turret": enemy.PlasmaTurret1
     }
     if obj.turret_type in turret_dict.keys():
         turret_class = turret_dict[obj.turret_type]

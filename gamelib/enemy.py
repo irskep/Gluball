@@ -48,7 +48,6 @@ class Turret(pyglet.sprite.Sprite):
         self.recoil_time = 0.7
         self.recoil_status = 0.0
         self.range_sq = 263000
-        #self.range_sq = 150000
         if not hasattr(self, 'health'):
             self.health = physics.default_health*0.6
         self.health_full = self.health
@@ -265,20 +264,20 @@ class Turret(pyglet.sprite.Sprite):
         physics.space.add(self.segment)
     
 
-class BluePlasmaTurret(Turret):
+class PlasmaTurret1(Turret):
     def __init__(self, x, y, rotation, obj_id=0, base_img=None,
                 base_rotation=0.0
             ):
-        img = resources.turret1_blue
-        super(BluePlasmaTurret, self).__init__(
-            resources.turret1_blue, unit.BlueTurret, x, y, 
+        img = resources.turret1
+        super(PlasmaTurret1, self).__init__(
+            resources.turret1, unit.NormalTurretA, x, y, 
             rotation, bullet.EnemyPlasmaBlue, obj_id, base_img, base_rotation
         )
         
-        self.turret_type = "Blue Plasma"
+        self.turret_type = "Turret"
     
     def fire(self):
-        fired = super(BluePlasmaTurret, self).spawn_bullet()
+        fired = super(PlasmaTurret1, self).spawn_bullet()
         if fired: sound.play(resources.laser_3)
     
 

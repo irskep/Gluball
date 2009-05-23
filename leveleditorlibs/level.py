@@ -19,7 +19,7 @@ player_x = 100
 player_y = 100
 player_angle = 1.57
 player_config = 'normal'
-background_image = pyglet.image.TileableTexture.create_for_image(resources.floor_tile)
+background_image = None
 background_image_name = 'floor_tile'
 prim_color = (0,0,0,1)
 
@@ -44,19 +44,7 @@ RTURRET1 = 102
 CTURRET1 = 103
 
 r = resources
-obj_table = {
-    #real img, class name, icon img
-    THRUSTER:   [r.thruster_off,    FreeThruster,   r.FreeThruster],
-    DECOY:      [r.logic_0,         FreeDecoy,      r.FreeDecoy],
-    BOMB:       [r.power_0,         FreeBomb,       r.FreeBomb],
-    SHIELD:     [r.ShieldGenerator, FreeShield,     r.FreeShield],
-    REPAIR:     [r.repair,          FreeRepair,     r.FreeRepair],
-    BEACON:     [r.beacon_1,        FreeBeacon,     r.FreeBeacon],
-    PLASMA:     [r.turret1_blue,    FreeTurret,     r.FreeTurret],
-    CARGO:      [r.cargo,           FreeCargo,      r.FreeCargo],
-    TOXIN:      [r.Harvester_1,     FreeToxin,      r.FreeToxin],
-    BRAIN:      [r.core6,           FreeGluballBrain, r.t_core_8]
-}
+obj_table = {}
 
 id_table = {
     u"!FreeThruster": THRUSTER,
@@ -71,15 +59,37 @@ id_table = {
     u"!FreeGluballBrain": BRAIN
 }
 
-turrets = [
-    ('turret1_blue', PlasmaTurret1)
-]
+turrets = []
 
 turret_bases = [
     ('turret_base', 'Scaffold'),
     ('Tower1_Static', 'MetalTower'),
     ('Tower2_Static', 'ConcreteTower')
 ]
+
+def init():
+    global background_image, obj_table, turrets
+    background_image = pyglet.image.TileableTexture.create_for_image(
+        getattr(resources, background_image_name)
+    )
+    obj_table = {
+        #real img, class name, icon img
+        THRUSTER:   [r.thruster_off,    FreeThruster,   r.FreeThruster],
+        DECOY:      [r.logic_static,    FreeDecoy,      r.FreeDecoy],
+        BOMB:       [r.bomb_static,     FreeBomb,       r.FreeBomb],
+        SHIELD:     [r.ShieldGenerator, FreeShield,     r.FreeShield],
+        REPAIR:     [r.repair,          FreeRepair,     r.FreeRepair],
+        BEACON:     [r.beacon_1,        FreeBeacon,     r.FreeBeacon],
+        PLASMA:     [r.turret1,         FreeTurret,     r.FreeTurret],
+        CARGO:      [r.cargo,           FreeCargo,      r.FreeCargo],
+        TOXIN:      [r.Harvester_1,     FreeToxin,      r.FreeToxin],
+        BRAIN:      [r.core,            FreeGluballBrain, r.t_core_8]
+    }
+    turrets = [
+        ('turret1', PlasmaTurret1)
+    ]
+    for k in sorted([k for k, v in resources.__dict__.items()]):
+        print k
 
 class SimpleObjectSprite(pyglet.sprite.Sprite):
     def __init__(self, obj_id, x, y, rotation, obj_type):
@@ -153,12 +163,11 @@ class TurretSprite(pyglet.sprite.Sprite):
     
 
 class RockSprite(pyglet.sprite.Sprite):
-    img_table = [getattr(resources, "rock_"+str(i+1)) for i in range(7)]
     
     def __init__(self, obj_id, x, y, rotation, rock_type):
         self.obj_id = obj_id
         self.rock_type = rock_type
-        img = self.img_table[rock_type]
+        img = getattr(resources, "rock_"+str(rock_type+1))
         super(RockSprite, self).__init__(img, x, y, batch=simple_objects_batch)
         self.rotation = rotation
     
@@ -251,7 +260,7 @@ def draw_level_objects():
             draw.set_color(*colors[True])
             graphics.set_line_width(1.0)
             draw.line(obj.x1, obj.y1, obj.x2, obj.y2)
-        elif obj.yaml_tag == u"!Key":
+        elif obj.yaml_tag == u"!key":
             draw.set_color(1,1,1,1)
             resources.key_images[obj.number].blit(obj.x, obj.y)
             
@@ -323,7 +332,7 @@ def load(path):
             primitives.append(obj)
             add_label(str(obj.obj_id), obj.x, obj.y, obj)
         
-        if obj.yaml_tag == u"!Key":
+        if obj.yaml_tag == u"!key":
             primitives.append(obj)
             add_label(str(obj.obj_id), obj.x-5, obj.y+5, obj)
         

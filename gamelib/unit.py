@@ -3,21 +3,27 @@ from util import env, draw, particle, physics
 from util import resources, settings, sound
 import bullet, level, pyro, event
 
-image_table = dict(
-    Unit=None,
-    Beacon=resources.beacon_1, 
-    BlueTurret=resources.turret1_blue, 
-    Bomb=resources.bomb_static,
-    Brain=resources.core_anim,
-    Brain2=resources.ph3ge_anim,
-    Cargo=resources.cargo,
-    Decoy=resources.logic_1,
-    GluballBrain=resources.core_anim,
-    Repair=resources.repair, 
-    Shield=resources.shield, 
-    Thruster=resources.thruster_off,
-    Toxin=resources.Harvester_1
-)
+image_table = {}
+
+def init_image_table():
+    global image_table
+    image_table = dict(
+        Unit =              None,
+        Beacon =            resources.beacon_1, 
+        NormalTurretA =     resources.turret1, 
+        Bomb =              resources.bomb_static,
+        Bomb_active =       resources.bomb_static,
+        Brain =             resources.core,
+        Cargo =             resources.cargo,
+        Decoy =             resources.decoy_off,
+        Decoy_on =          resources.decoy_on,
+        GluballBrain =      resources.core,
+        Repair =            resources.repair, 
+        Shield =            resources.shield, 
+        Thruster =          resources.thruster_off,
+        Thruster_on =       resources.thruster_on,
+        Toxin =             resources.Harvester_1
+    )
 
 class Unit(pyglet.sprite.Sprite):
     def __init__(
@@ -234,6 +240,8 @@ class Unit(pyglet.sprite.Sprite):
             self.sound_player.eos_action = self.sound_player.EOS_LOOP
             self.sound_player.volume = settings.sound_volume
             self.sound_player.queue(self.sound)
+        else:
+            self.sound_player.eos_action = self.sound_player.EOS_PAUSE
         self.using_sound = True
     
     def activate(self):
@@ -243,7 +251,7 @@ class Unit(pyglet.sprite.Sprite):
             if self.loop_sound:
                 self.sound_player.play()
             else:
-                self.sound.play()
+                sound.play(self.sound)
     
     def deactivate(self):
         self.active = False
@@ -315,7 +323,7 @@ class Decoy(Unit):
         )
         self.label = "Decoy"
         self.uses_keys = True
-        self.ask_key = True
+        self.ask_key = False
         
         self.init_attr('toggled_on', False, load_from)
     
@@ -323,15 +331,16 @@ class Decoy(Unit):
         super(Decoy, self).update()
         if self.toggled_on:
             level.decoy_x, level.decoy_y = self.x, self.y
-            level.decoy_present = True
+            level.decoy_present += 1
     
     def activate(self):
         super(Decoy, self).activate()
         self.toggled_on = not self.toggled_on
         if self.toggled_on:
-            self.image = resources.logic_anim
+            self.image = image_table['Decoy_on']
+            level.decoy_present += 1
         else:
-            self.image = resources.logic_1
+            self.image = image_table['Decoy']
     
     def attach(self):
         if not self.toggled_on:
@@ -358,9 +367,9 @@ class Bomb(Unit):
         super(Bomb, self).activate()
         self.toggled_on = not self.toggled_on
         if self.toggled_on:
-            self.image = resources.bomb_anim
+            self.image = image_table['Bomb_active']
         else:
-            self.image = resources.bomb_static
+            self.image = image_table['Bomb']
     
     def update(self):
         if not self.toggled_on or self.parent == level.player:
@@ -590,20 +599,20 @@ class Turret(Unit):
         if self.active and self.recoil_status <= 0: self.fire()
     
 
-class BlueTurret(Turret):
+class NormalTurretA(Turret):
     def __init__(
                 self, body=None, offset=(0,0), rot=0.0, obj_id=0, load_from=None
             ):
-        super(BlueTurret, self).__init__(
+        super(NormalTurretA, self).__init__(
             body, offset, rot, bullet.PlayerPlasmaBlue, obj_id, 0.0, load_from
         )
-        self.label = "Blue Plasma Turret"
+        self.label = "Turret"
         self.recoil_time = 0.5
         self.circle2_rad = 3
         self.circle2_dist = 25
     
     def fire(self):
-        super(BlueTurret, self).fire()
+        super(NormalTurretA, self).fire()
         sound.play(resources.laser_3)
     
 
@@ -657,9 +666,9 @@ class Thruster(Unit):
         self.uses_keys = True
         self.ask_key = True
         self.logic_req = 25
-        self.line_length = -35
-        self.circle2_rad = 5
-        self.circle2_dist = -27
+        #self.line_length = -35
+        #self.circle2_rad = 5
+        #self.circle2_dist = -27
         
         self.subtract_amt = 1.0
         
@@ -667,7 +676,7 @@ class Thruster(Unit):
         
         self.flame_sprite = pyglet.sprite.Sprite(
             resources.engine_flame_1, self.x, self.y,
-            batch=level.batch, group=level.decal_group
+            batch=level.batch, group=level.door_group
         )
         self.flame_sprite.visible = False
     
@@ -699,11 +708,11 @@ class Thruster(Unit):
         if self.flame_sprite.visible:
             if not self.active and self.active_timer <= 0:
                 self.flame_sprite.visible = False
-                self.image = resources.thruster_off
+                self.image = image_table['Thruster']
     
     def activate(self):
         super(Thruster, self).activate()
-        self.image = resources.thruster_active_anim
+        self.image = image_table['Thruster_on']
         self.flame_sprite.visible = True
         if env.enable_damping:
             self.subtract_amt = 1.0
@@ -713,6 +722,6 @@ class Thruster(Unit):
     def deactivate(self):
         super(Thruster, self).deactivate()
         if self.active_timer <= 0:
-            self.image = resources.thruster_off
+            self.image = image_table['Thruster']
             self.flame_sprite.visible = False
     

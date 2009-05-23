@@ -2,8 +2,8 @@
 import pyglet, math, os
 pyglet.options['debug_gl'] = False
 
-from gamelib.util import env, gui, music, save, settings
-from gamelib import gluballplayer, event, level
+from gamelib.util import env, gui, music, particle, resources, save, settings
+from gamelib import gluballplayer, event, level, obstacle, unit
 
 from pyglet import gl
 from pyglet.window import key
@@ -18,6 +18,14 @@ class GluballWindow(pyglet.window.Window):
     def __init__(self):
         self.init_window()
         level.init_entry_points()
+        resources.load(
+            ['Backgrounds', 'Base', 'Decals', 'Destructible', 'Doors', 'Enemies', 
+            'Music', 'Sounds', 'Units', 'Title'], prefix='Data/'
+        )
+        particle.init()
+        unit.init_image_table()
+        obstacle.init()
+        
         self.init_gui()
         settings.set('first_launch', False)
         pyglet.clock.schedule(self.on_draw)
@@ -94,7 +102,7 @@ class GluballWindow(pyglet.window.Window):
         if self.music_countdown > 0:
             self.music_countdown -= dt
             if self.music_countdown <= 0:
-                music.new_song('spooky')
+                music.new_song('The_Creature_Sneaks')
         if self.mode == GUI:
             gl.glLoadIdentity()
             if env.scale_factor != 1.0:
@@ -139,7 +147,7 @@ class GluballWindow(pyglet.window.Window):
         gui.transition_time = 0.5
         gui.next_card = None
         pyglet.clock.schedule(self.on_draw)
-        music.new_song('spooky')
+        music.new_song('The_Creature_Sneaks')
     
     def on_key_press(self, symbol, modifiers):
         if symbol == key.ESCAPE:
@@ -147,12 +155,12 @@ class GluballWindow(pyglet.window.Window):
     
 
 def run_game():
-    try:
-        import psyco
-        psyco_imported = True
-        psyco.full()
-    except:
-        pass
+    # try:
+    #     import psyco
+    #     psyco_imported = True
+    #     psyco.full()
+    # except:
+    #     pass
     main_window = GluballWindow()
     pyglet.app.run()
 

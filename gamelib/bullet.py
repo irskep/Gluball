@@ -44,7 +44,7 @@ class EnemyPlasmaBlue(Bullet):
     velocity  = 700
     def __init__(self, x, y, vx, vy, batch=None, group=None):
         super(EnemyPlasmaBlue, self).__init__(
-            physics.ENEMY_BULLET, resources.bullet_blue, 10, 
+            physics.ENEMY_BULLET, resources.bullet_orange, 10, 
             x, y, vx, vy, False, batch, group
         )
     
@@ -53,7 +53,7 @@ class PlayerPlasmaBlue(Bullet):
     velocity = 700
     def __init__(self, x, y, vx, vy, batch=None, group=None):
         super(PlayerPlasmaBlue, self).__init__(
-            physics.PLAYER_BULLET, resources.bullet_blue, 10, 
+            physics.PLAYER_BULLET, resources.bullet_orange, 10, 
             x, y, vx, vy, False, batch, group
         )
     

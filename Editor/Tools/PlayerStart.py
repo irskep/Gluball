@@ -14,6 +14,6 @@ class PlayerStart(tool.Tool):
 
 default = PlayerStart()
 priority = 1
-group = 'Events'
+group = 'Actions'
 image = resources.PlayerStart
 cursor = graphics.cursor['CURSOR_DEFAULT']

@@ -53,7 +53,7 @@ class TextButton(pyglet.text.Label):
         self.color_mouse = (100, 100, 100, 255)
         self.color_pressed = (0, 0, 0, 255)
         super(TextButton, self).__init__(
-            text, font_name="Gill Sans",
+            text, font_name="Epilog",
             font_size=size, x=x, y=y, color=self.color_normal, 
             anchor_x=anchor_x, anchor_y=anchor_y
         )
@@ -163,7 +163,7 @@ class TextEntry(object):
         )
         self.document.set_style(0, len(self.document.text), 
             dict(color=(128,128,128,255), 
-            align=self.anchor_x, font_name='Gill Sans', font_size=36)
+            align=self.anchor_x, font_name='Epilog', font_size=36)
         )
         font = self.document.get_font()
         height = font.ascent - font.descent

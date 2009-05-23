@@ -1,4 +1,4 @@
-import os, pyglet
+import os, pyglet, math
 import env, draw, music, resources, save, settings, widget
 from pyglet.window import key
 from pyglet import gl
@@ -26,6 +26,10 @@ class Card(object):
     def push_handlers(self):    
         for widget in self.widgets:
             window.push_handlers(widget)
+            try:
+                widget.on_card_enter()
+            except:
+                pass #don't care, probably isn't there
     
     def pop_handlers(self):
         for widget in self.widgets:
@@ -169,7 +173,7 @@ def settings_widgets():
         False,
         "Changes will take effect the next time gluball is run.",
         x=env.norm_w/2, y=20,
-        font_name='Gill Sans', font_size=24, 
+        font_name='Epilog', font_size=24, 
         color=(128,128,128,255),
         anchor_x='center'
     )
@@ -183,13 +187,13 @@ def settings_widgets():
     )
     sound_label = pyglet.text.Label(
         "Sound Volume", 
-        font_name='Gill Sans', font_size=36,
+        font_name='Epilog', font_size=36,
         x=left, y=fullscreen_toggle.y-item_spacing,
         color=(128,128,128,255)
     )
     music_label = pyglet.text.Label(
         "Music Volume", 
-        font_name='Gill Sans', font_size=36,
+        font_name='Epilog', font_size=36,
         x=left, y=sound_label.y-item_spacing,
         color=(128,128,128,255)
     )
@@ -236,7 +240,7 @@ def instruction_widgets():
     )
     back_label = pyglet.text.Label(
         "Click or press Escape to go back.",
-        font_size=24, font_name="Gill Sans",
+        font_size=24, font_name="Epilog",
         x=10, y=10, color=(0,0,0,255)
     )
     click_back = widget.ClickTrigger(go_back)
@@ -260,7 +264,7 @@ def instruction_widgets_first():
     )
     back_label = pyglet.text.Label(
         "Click or press Space to continue.",
-        font_size=24, font_name="Gill Sans",
+        font_size=24, font_name="Epilog",
         x=10, y=10, color=(0,0,0,255)
     )
     click_back = widget.ClickTrigger(state_goer(START))
@@ -268,11 +272,42 @@ def instruction_widgets_first():
     esc_back = widget.KeyTrigger(key.ESCAPE, state_goer(START))
     return [instructions_image, back_label, click_back, space_back, esc_back]
 
+class BigThruster(pyglet.sprite.Sprite):
+    def __init__(self):
+        super(BigThruster, self).__init__(resources.bigthruster, x=env.norm_w/2, y=env.norm_h/2)
+        self.opacity = 50
+        self.autorotate = False
+        self.target = 0
+    
+    def on_mouse_motion(self, x, y, dx, dy):
+        if not self.autorotate:
+            self.target = -math.degrees(math.atan2(y-self.y, x-self.x))+90
+    
+    def on_mouse_release(self, x, y, button, modifiers):
+        if transition_time > 0:
+            self.autorotate = True
+    
+    def on_card_enter(self):
+        self.autorotate = False
+    
+    def draw(self):
+        if self.autorotate:
+            self.rotation += env.dt*800
+        else:
+            da = (self.rotation - self.target) % 360
+            if da > 5 and da < 355:
+                if da < 180:
+                    self.rotation -= env.dt*200
+                else:
+                    self.rotation += env.dt*200
+        super(BigThruster, self).draw()
+    
+
 def title_widgets():
     title_label = pyglet.text.Label(
         "gluball", x=env.norm_w/2, y=env.norm_h/16*11,
         anchor_x='center', anchor_y='baseline', 
-        font_size=36*3, font_name='Gill Sans', 
+        font_size=36*3, font_name='Epilog', 
         color=(128,128,128,255)
     )
     title_underline = widget.Line(
@@ -281,11 +316,6 @@ def title_widgets():
         title_label.x+title_label.content_width/2,
         title_label.y-3*env.scale_factor
     )
-    # instructions_button = widget.TextButton(
-    #        "Instructions", env.norm_w/2, env.norm_h/16*8,
-    #        get_card_changer(cards['instructions']),
-    #        anchor_x='center'
-    #    )
     
     def load():
         global load_path, next_card, transition_time
@@ -299,7 +329,7 @@ def title_widgets():
         load, anchor_x='center'
     )
     
-    center_x = env.norm_w/2 + 30
+    center_x = env.norm_w/2 + 50
     
     start_button = widget.TextButton(
         "New Game", center_x-30, continue_button.y-env.norm_h/8,
@@ -308,7 +338,8 @@ def title_widgets():
     settings_button = widget.TextButton(
         "Settings", center_x+30, start_button.y,
         get_card_changer(cards['settings']), 
-        anchor_x='left'
+        anchor_x='left',
+        color_normal=(0,0,0,255)
     )
     load_button = widget.TextButton(
         "Load Game", center_x-30, start_button.y-env.norm_h/8,
@@ -323,18 +354,25 @@ def title_widgets():
     start_key_trigger = widget.KeyTrigger(key.SPACE, start_button.action)
     button_sep = widget.Line(
         center_x, start_button.y+start_button.content_height*0.7,
-        center_x, quit_button.y-5
+        center_x, quit_button.y-5, color=(0,0,0,1)
     )
     
     udg_label_1 = pyglet.text.Label(
-        "gluball is an entry in uDevGames 2008/2009. Visit www.udevgames.com for more information.",
-        x=10, y=30, font_size=14, font_name='Gill Sans', color=(128,128,128,255)
+        "gluball is based on an entry in uDevGames.",
+        x=10, y=30, font_size=14, font_name='Epilog', color=(128,128,128,255)
     )
     udg_label_2 = pyglet.text.Label(
-        "Please send any questions or suggestions to diordna@gmail.com.",
-        x=10, y=10, font_size=14, font_name='Gill Sans', color=(128,128,128,255)
+        "Please send any questions or suggestions to steve.johnson.public@gmail.com.",
+        x=10, y=10, font_size=14, font_name='Epilog', color=(128,128,128,255)
     )
+    
+    for l in [continue_button, start_button, load_button, settings_button, quit_button, title_label]:
+        l.color_normal = (60,60,60,255)
+        l.color_mouse = (30, 30, 30, 255)
+        l.color_pressed = (0, 0, 0, 255)
+    
     widgets = [
+        BigThruster(),
         udg_label_1,
         udg_label_2,
         button_sep,

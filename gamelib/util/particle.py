@@ -13,11 +13,11 @@ from pyglet.window import *
 from pyglet.window.event import *
 from pyglet.window import key
 
-fire_image = resources.fire
-fire_image.anchor_x = fire_image.width/2
-fire_image.anchor_y = fire_image.height/2
-
 fires = []
+
+def init():
+    global fire_image
+    fire_image = resources.fire
 
 class Fire: 
     def __init__(self,x,y,vx,vy,frame,size):

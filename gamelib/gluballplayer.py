@@ -153,7 +153,8 @@ class GluballPlayer():
         env.dt = dt
         #Update physics if not paused
         if self.mode == PLAYING and not self.loading:
-            level.decoy_present = False
+            if level.decoy_present > 0:
+                level.decoy_present -= 1
             physics.step(dt)
         #Update particle system
         particle.update()
@@ -246,21 +247,7 @@ class GluballPlayer():
     def draw_level(self):
         draw.clear(0,0,0,1)
         draw.set_color(1,1,1,1)
-        if level.background_image != None:
-            #level.background_image.blit_tiled(
-            #    -env.norm_w//2, -env.norm_h//2,
-            #    0, level.width+env.norm_w, level.height+env.norm_h
-            #)
-            if level.background_tiled:
-                level.background_image.blit_tiled(0, 0, 0, level.width, level.height)
-            else:
-                if level.background_scale != 1.0:
-                    gl.glPushMatrix()
-                    gl.glScalef(level.background_scale, level.background_scale, 1.0)
-                level.background_image.blit(0, 0)
-                if level.background_scale != 1.0:
-                    gl.glPopMatrix()
-        
+        level.background_image.blit_tiled(0, 0, 0, level.width, level.height)
         gl.glLineWidth(3.0)
         level.batch.draw()
         particle.draw()

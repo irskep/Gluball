@@ -12,7 +12,7 @@ class Decal(tool.Tool):
         self.button_group = gui.ButtonGroup()
         images = []
         names = []
-        for decal in resources.decals:
+        for decal in resources.loaded_items['Data/Decals']:
             images.append(getattr(resources, 't_'+decal))
             names.append(decal)
         def select_obj_type(newtype):
