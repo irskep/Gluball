@@ -38,11 +38,6 @@ TOXIN = 8
 BRAIN = 9
 max_types_1 = 10
 
-PTURRET1 = 100
-PTURRET2 = 101
-RTURRET1 = 102
-CTURRET1 = 103
-
 r = resources
 obj_table = {}
 

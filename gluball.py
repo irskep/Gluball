@@ -3,7 +3,7 @@ import pyglet, math, os
 pyglet.options['debug_gl'] = False
 
 from gamelib.util import env, gui, music, particle, resources, save, settings
-from gamelib import gluballplayer, event, level, obstacle, unit
+from gamelib import bullet, gluballplayer, event, level, mappings
 
 from pyglet import gl
 from pyglet.window import key
@@ -22,9 +22,8 @@ class GluballWindow(pyglet.window.Window):
             ['Backgrounds', 'Base', 'Decals', 'Destructible', 'Doors', 'Enemies', 
             'Music', 'Sounds', 'Units', 'Title'], prefix='Data/'
         )
-        particle.init()
-        unit.init_image_table()
-        obstacle.init()
+        mappings.init()
+        bullet.init()
         
         self.init_gui()
         settings.set('first_launch', False)

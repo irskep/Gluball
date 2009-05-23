@@ -271,7 +271,7 @@ class PlasmaTurret1(Turret):
         img = resources.turret1
         super(PlasmaTurret1, self).__init__(
             resources.turret1, unit.NormalTurretA, x, y, 
-            rotation, bullet.EnemyPlasmaBlue, obj_id, base_img, base_rotation
+            rotation, bullet.EnemyPlasmaOrange, obj_id, base_img, base_rotation
         )
         
         self.turret_type = "Turret"

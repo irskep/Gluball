@@ -15,10 +15,6 @@ from pyglet.window import key
 
 fires = []
 
-def init():
-    global fire_image
-    fire_image = resources.fire
-
 class Fire: 
     def __init__(self,x,y,vx,vy,frame,size):
         self.x,self.y,self.vx,self.vy,self.frame,self.size = x,y,vx,vy,frame,size

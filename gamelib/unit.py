@@ -1,29 +1,7 @@
 import math, pymunk, pyglet, random
 from util import env, draw, particle, physics
 from util import resources, settings, sound
-import bullet, level, pyro, event
-
-image_table = {}
-
-def init_image_table():
-    global image_table
-    image_table = dict(
-        Unit =              None,
-        Beacon =            resources.beacon_1, 
-        NormalTurretA =     resources.turret1, 
-        Bomb =              resources.bomb_static,
-        Bomb_active =       resources.bomb_static,
-        Brain =             resources.core,
-        Cargo =             resources.cargo,
-        Decoy =             resources.decoy_off,
-        Decoy_on =          resources.decoy_on,
-        GluballBrain =      resources.core,
-        Repair =            resources.repair, 
-        Shield =            resources.shield, 
-        Thruster =          resources.thruster_off,
-        Thruster_on =       resources.thruster_on,
-        Toxin =             resources.Harvester_1
-    )
+import bullet, level, mappings, event
 
 class Unit(pyglet.sprite.Sprite):
     def __init__(
@@ -33,7 +11,7 @@ class Unit(pyglet.sprite.Sprite):
         if mass == 0.0: mass = physics.default_mass
         
         if img == None:
-            img = image_table[self.__class__.__name__]
+            img = mappings.unit_images[self.__class__.__name__]
         
         super(Unit, self).__init__(
             img, batch=level.batch, group=level.unit_group
@@ -337,10 +315,10 @@ class Decoy(Unit):
         super(Decoy, self).activate()
         self.toggled_on = not self.toggled_on
         if self.toggled_on:
-            self.image = image_table['Decoy_on']
+            self.image = mappings.unit_images['Decoy_on']
             level.decoy_present += 1
         else:
-            self.image = image_table['Decoy']
+            self.image = mappings.unit_images['Decoy']
     
     def attach(self):
         if not self.toggled_on:
@@ -367,9 +345,9 @@ class Bomb(Unit):
         super(Bomb, self).activate()
         self.toggled_on = not self.toggled_on
         if self.toggled_on:
-            self.image = image_table['Bomb_active']
+            self.image = mappings.unit_images['Bomb_active']
         else:
-            self.image = image_table['Bomb']
+            self.image = mappings.unit_images['Bomb']
     
     def update(self):
         if not self.toggled_on or self.parent == level.player:
@@ -555,7 +533,7 @@ class Turret(Unit):
                 self, body, offset, rot, bullet_class, obj_id=0, 
                 mass=0.0, load_from=None
             ):
-        img = image_table[self.__class__.__name__]
+        img = mappings.unit_images[self.__class__.__name__]
         radius = img.height*0.45
         if mass == 0.0:
             mass = physics.default_mass*0.8
@@ -604,7 +582,7 @@ class NormalTurretA(Turret):
                 self, body=None, offset=(0,0), rot=0.0, obj_id=0, load_from=None
             ):
         super(NormalTurretA, self).__init__(
-            body, offset, rot, bullet.PlayerPlasmaBlue, obj_id, 0.0, load_from
+            body, offset, rot, bullet.PlayerPlasmaOrange, obj_id, 0.0, load_from
         )
         self.label = "Turret"
         self.recoil_time = 0.5
@@ -708,11 +686,11 @@ class Thruster(Unit):
         if self.flame_sprite.visible:
             if not self.active and self.active_timer <= 0:
                 self.flame_sprite.visible = False
-                self.image = image_table['Thruster']
+                self.image = mappings.unit_images['Thruster']
     
     def activate(self):
         super(Thruster, self).activate()
-        self.image = image_table['Thruster_on']
+        self.image = mappings.unit_images['Thruster_on']
         self.flame_sprite.visible = True
         if env.enable_damping:
             self.subtract_amt = 1.0
@@ -722,6 +700,6 @@ class Thruster(Unit):
     def deactivate(self):
         super(Thruster, self).deactivate()
         if self.active_timer <= 0:
-            self.image = image_table['Thruster']
+            self.image = mappings.unit_images['Thruster']
             self.flame_sprite.visible = False
     

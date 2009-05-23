@@ -7,8 +7,6 @@ i = 0
 
 def play(sound):
     global this_player, players, i
-    i += 1
-    print i
     if len(players) < PLAYER_LIMIT:
         new_player = pyglet.media.Player()
         new_player.volume = settings.sound_volume

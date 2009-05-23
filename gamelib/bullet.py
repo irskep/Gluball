@@ -1,6 +1,30 @@
 import pyglet, math, pymunk
 from util import physics, resources
 
+EnemyPlasmaOrange = None
+PlayerPlasmaOrange = None
+
+def init():
+    global EnemyPlasmaOrange, PlayerPlasmaOrange
+    EnemyPlasmaOrange, PlayerPlasmaOrange = make_bullet_class(resources.bullet_orange, 700, 10)
+
+def make_bullet_class(img, speed, damage):
+    class EnemyBullet(Bullet):
+        velocity = speed
+        def __init__(self, x, y, vx, vy, batch=None, group=None):
+            super(EnemyBullet, self).__init__(
+                physics.ENEMY_BULLET, img, damage, 
+                x, y, vx, vy, False, batch, group
+            )
+    class PlayerBullet(Bullet):
+        velocity = speed
+        def __init__(self, x, y, vx, vy, batch=None, group=None):
+            super(PlayerBullet, self).__init__(
+                physics.PLAYER_BULLET, img, damage, 
+                x, y, vx, vy, False, batch, group
+            )
+    return EnemyBullet, PlayerBullet
+
 class Bullet(pyglet.sprite.Sprite):
     velocity = 700.0
     def __init__(
@@ -39,74 +63,3 @@ class Bullet(pyglet.sprite.Sprite):
     def update_physics(self):
         pass
     
-
-class EnemyPlasmaBlue(Bullet):
-    velocity  = 700
-    def __init__(self, x, y, vx, vy, batch=None, group=None):
-        super(EnemyPlasmaBlue, self).__init__(
-            physics.ENEMY_BULLET, resources.bullet_orange, 10, 
-            x, y, vx, vy, False, batch, group
-        )
-    
-
-class PlayerPlasmaBlue(Bullet):
-    velocity = 700
-    def __init__(self, x, y, vx, vy, batch=None, group=None):
-        super(PlayerPlasmaBlue, self).__init__(
-            physics.PLAYER_BULLET, resources.bullet_orange, 10, 
-            x, y, vx, vy, False, batch, group
-        )
-    
-
-class EnemyRapid(Bullet):
-    velocity  = 1200
-    def __init__(self, x, y, vx, vy, batch=None, group=None):
-        super(EnemyRapid, self).__init__(
-            physics.ENEMY_BULLET, resources.bullet_long, 2, 
-            x, y, vx, vy, True, batch, group
-        )
-    
-
-class PlayerRapid(Bullet):
-    velocity  = 1200
-    def __init__(self, x, y, vx, vy, batch=None, group=None):
-        super(PlayerRapid, self).__init__(
-            physics.PLAYER_BULLET, resources.bullet_long, 2, 
-            x, y, vx, vy, True, batch, group
-        )
-
-
-class EnemyRapid2(Bullet):
-    velocity  = 1600
-    def __init__(self, x, y, vx, vy, batch=None, group=None):
-        super(EnemyRapid2, self).__init__(
-            physics.ENEMY_BULLET, resources.bullet_long_red, 8, 
-            x, y, vx, vy, True, batch, group
-        )
-
-
-class PlayerRapid2(Bullet):
-    velocity  = 1600
-    def __init__(self, x, y, vx, vy, batch=None, group=None):
-        super(PlayerRapid2, self).__init__(
-            physics.PLAYER_BULLET, resources.bullet_long_red, 8, 
-            x, y, vx, vy, True, batch, group
-        )
-
-
-class EnemyShell(Bullet):
-    velocity  = 500
-    def __init__(self, x, y, vx, vy, batch=None, group=None):
-        super(EnemyShell, self).__init__(
-            physics.ENEMY_BULLET, resources.bullet_big, 40, 
-            x, y, vx, vy, True, batch, group
-        )
-
-
-class PlayerShell(Bullet):
-    velocity  = 500
-    def __init__(self, x, y, vx, vy, batch=None, group=None):
-        super(PlayerShell, self).__init__(
-            physics.PLAYER_BULLET, resources.bullet_big, 40, 
-            x, y, vx, vy, True, batch, group
-        )

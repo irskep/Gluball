@@ -1,21 +1,7 @@
 import pyglet, pymunk, math, random
 from util import draw, env, physics, resources, serialize, sound
+from mappings import door_types
 import level
-
-door_types = {}
-
-def init():
-    global door_types
-    door_types[0] = {
-        'closed_static': resources.Door_red_closed,
-        'open_static': resources.Door_red_open,
-        'open_anim': resources.Door_red_open,
-        'close_anim': resources.Door_red_closed,
-        'underlay': resources.Door_red_open,
-        'sound': resources.blast_door_quick_1,
-        'collision_delay_open': 0,
-        'collision_delay_close': 0
-    }
 
 class Destructible(pyglet.sprite.Sprite):
     def __init__(self, x, y, rot, normal_img, exploded_img):
