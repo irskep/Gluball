@@ -1,0 +1,124 @@
+- !anchor
+  point: [25, 25]
+  images: [turret1]
+
+- !anchor
+  point: [26, 40]
+  images:
+  - Harvester_1
+  - Harvester_2
+  - Harvester_3
+  - Harvester_4
+  - Harvester_5
+  - Harvester_6
+  - Harvester_7
+  - Harvester_8
+  
+
+- !animation
+  name: beacon_anim
+  period: 0.2
+  mirror: false
+  loop: true
+  images: [beacon_1, beacon_2, beacon_3, beacon_4, beacon_5, beacon_6, beacon_7]
+
+- !animation
+  name: toxin_anim
+  period: 0.1
+  mirror: true
+  loop: true
+  images: 
+  - Harvester_1
+  - Harvester_2
+  - Harvester_3
+  - Harvester_4
+  - Harvester_5
+  - Harvester_6
+  - Harvester_7
+  - Harvester_8
+
+- !animation
+  name: drone
+  period: 0.1
+  mirror: false
+  loop: true
+  images: 
+  - drone_1
+  - drone_2
+  - drone_3
+  - drone_2
+  - drone_1
+  - drone_3
+  - drone_1
+  - drone_3
+  - drone_2
+  - drone_3
+  - drone_2
+  - drone_1
+  - drone_2
+  - drone_3
+  - drone_1
+  - drone_3
+  - drone_1
+  - drone_2
+
+- !center_prefixes
+  prefixes:
+  - beacon
+  - cargo
+  - core
+  - decoy
+  - drone
+  - Key_
+  - logic
+  - power
+  - repair
+  - shield
+  - thruster
+
+
+- !Key
+  tag: 0
+  image: Key_R
+  color: [1, 0, 0, 1]
+
+- !Key
+  tag: 1
+  image: Key_O
+  color: [1, 0.5, 0, 1]
+
+- !Key
+  tag: 2
+  image: Key_Y
+  color: [1, 1, 0, 1]
+
+- !Key
+  tag: 3
+  image: Key_G
+  color: [0, 1, 0, 1]
+
+- !Key
+  tag: 4
+  image: Key_B
+  color: [0, 0, 1, 1]
+
+- !Key
+  tag: 5
+  image: Key_P
+  color: [0.5, 0.1, 1, 1]
+
+- !alias
+  original: logic
+  name: logic_active
+
+- !alias
+  original: logic
+  name: logic_static
+
+- !alias
+  original: poewr
+  name: bomb_active
+
+- !alias
+  original: power
+  name: bomb_static

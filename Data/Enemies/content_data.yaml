@@ -1,0 +1,17 @@
+- !anchor
+  point: [35, 46]
+  images: 
+  - Tower1_1_over
+  - Tower1_1_under
+  - Tower1_1
+  - Tower1_2_over
+  - Tower1_2_under
+  - Tower1_2
+  - Tower1_3
+  - Tower1_4
+  - Tower1_Static
+  - Tower2_Static
+
+- !center_prefixes
+  prefixes:
+  - turret_base

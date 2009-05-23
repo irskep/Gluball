@@ -1,0 +1,208 @@
+- !anchor
+  point: [0, 26]
+  images: 
+  - Door2_R_Static
+  - Door2_R_1
+  - Door2_R_2
+  - Door2_R_3
+  - Door2_R_4
+  - Door2_R_5
+  - Door2_R_6
+  - Door2_R_Open
+  - Door2_R_under
+  - Door2_P_Static
+  - Door2_P_1
+  - Door2_P_2
+  - Door2_P_3
+  - Door2_P_4
+  - Door2_P_5
+  - Door2_P_6
+  - Door2_P_Open
+  - Door2_P_under
+  
+
+- !anchor
+  point: [3, 5]
+  images:
+  - Door3_G_Static
+  - Door3_G_01
+  - Door3_G_02
+  - Door3_G_03
+  - Door3_G_04
+  - Door3_G_05
+  - Door3_G_06
+  - Door3_G_07
+  - Door3_G_08
+  - Door3_G_09
+  - Door3_G_10
+  - Door3_G_11
+  - Door3_G_12
+  - Door3_G_13
+  - Door3_G_14
+  - Door3_G_15
+  - Door3_G_16
+  - Door3_G_17
+  - Door3_G_18
+  - Door3_G_19
+  - Door3_G_Open
+  - Door3_G_under
+  
+
+- !animation
+  name: Door1_B_open_anim
+  period: 0.18
+  mirror: false
+  loop: false
+  images:
+  - Door1_B_Static
+  - Door1_B_1
+  - Door1_B_2
+  - Door1_B_3
+  - Door1_B_4
+  - Door1_B_5
+  - Door1_B_6
+  - Door1_B_7
+  - Door1_B_8
+  - Door1_B_9
+  - Door1_B_Open
+  
+
+- !animation
+  name: Door1_B_close_anim
+  period: 0.18
+  mirror: false
+  loop: false
+  images:
+  - Door1_B_Open
+  - Door1_B_9
+  - Door1_B_8
+  - Door1_B_7
+  - Door1_B_6
+  - Door1_B_5
+  - Door1_B_4
+  - Door1_B_3
+  - Door1_B_2
+  - Door1_B_1
+  - Door1_B_Static
+  
+
+- !animation
+  name: Door2_R_open_anim
+  period: 0.2
+  mirror: false
+  loop: false
+  images:
+  - Door2_R_Static
+  - Door2_R_1
+  - Door2_R_2
+  - Door2_R_3
+  - Door2_R_4
+  - Door2_R_5
+  - Door2_R_6
+  - Door2_R_Open
+  
+
+- !animation
+  name: Door2_R_close_anim
+  period: 0.2
+  mirror: false
+  loop: false
+  images:
+  - Door2_R_Open
+  - Door2_R_6
+  - Door2_R_5
+  - Door2_R_4
+  - Door2_R_3
+  - Door2_R_2
+  - Door2_R_1
+  - Door2_R_Static
+  
+
+- !animation
+  name: Door2_P_open_anim
+  period: 0.2
+  mirror: false
+  loop: false
+  images:
+  - Door2_P_Static
+  - Door2_P_1
+  - Door2_P_2
+  - Door2_P_3
+  - Door2_P_4
+  - Door2_P_5
+  - Door2_P_6
+  - Door2_P_Open
+  
+
+- !animation
+  name: Door2_P_close_anim
+  period: 0.2
+  mirror: false
+  loop: false
+  images:
+  - Door2_P_Open
+  - Door2_P_6
+  - Door2_P_5
+  - Door2_P_4
+  - Door2_P_3
+  - Door2_P_2
+  - Door2_P_1
+  - Door2_P_Static
+  
+
+- !animation
+  name: Door3_G_open_anim
+  period: 0.19
+  mirror: false
+  loop: false
+  images:
+  - Door3_G_Static
+  - Door3_G_01
+  - Door3_G_02
+  - Door3_G_03
+  - Door3_G_04
+  - Door3_G_05
+  - Door3_G_06
+  - Door3_G_07
+  - Door3_G_08
+  - Door3_G_09
+  - Door3_G_10
+  - Door3_G_11
+  - Door3_G_12
+  - Door3_G_13
+  - Door3_G_14
+  - Door3_G_15
+  - Door3_G_16
+  - Door3_G_17
+  - Door3_G_18
+  - Door3_G_19
+  - Door3_G_Open
+  
+
+- !animation
+  name: Door3_G_close_anim
+  period: 0.19
+  mirror: false
+  loop: false
+  images:
+  - Door3_G_Open
+  - Door3_G_19
+  - Door3_G_18
+  - Door3_G_17
+  - Door3_G_16
+  - Door3_G_15
+  - Door3_G_14
+  - Door3_G_13
+  - Door3_G_12
+  - Door3_G_11
+  - Door3_G_10
+  - Door3_G_09
+  - Door3_G_08
+  - Door3_G_07
+  - Door3_G_06
+  - Door3_G_05
+  - Door3_G_04
+  - Door3_G_03
+  - Door3_G_02
+  - Door3_G_01
+  - Door3_G_Static

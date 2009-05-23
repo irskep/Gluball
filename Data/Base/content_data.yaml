@@ -1,0 +1,11 @@
+- !anchor
+  point: [40, 8]
+  images: [engine_flame_1]
+
+- !center_prefixes
+  prefixes:
+  - bullet
+  - dest_arrow
+  - fire
+  - particle
+  - puff
