@@ -15,7 +15,7 @@ class SimpleObject(tool.Tool):
                 self.obj_type = newtype
             return select
         
-        top_length = level.max_types_1
+        top_length = len(level.obj_table)
         images_1 = [level.obj_table[i][2] for i in xrange(top_length)]
         functions_1 = [select_obj_type(i) for i in xrange(top_length)]
         tool.generate_button_row(images_1, functions_1, self.button_group)

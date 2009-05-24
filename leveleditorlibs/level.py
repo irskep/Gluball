@@ -36,7 +36,6 @@ PLASMA = 6
 CARGO = 7
 TOXIN = 8
 BRAIN = 9
-max_types_1 = 10
 
 r = resources
 obj_table = {}
