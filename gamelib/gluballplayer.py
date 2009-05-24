@@ -259,7 +259,7 @@ class GluballPlayer():
         if self.fade_countdown > 0:
             draw.set_color(1,1,1,self.fade_countdown/0.5)
             draw.rect(0, 0, env.norm_w, env.norm_h)
-            self.fade_countdown -= dt
+            self.fade_countdown -= env.dt
             if self.fade_countdown < 0:
                 self.fade_countdown = 0
         if event.fade_out_countdown != -100 or event.stay_black:
@@ -316,7 +316,7 @@ class GluballPlayer():
         if gui.current_card == 1:
             #unpause
             self.toggle_pause()
-        if gui.current_card == 2:
+        if gui.current_card == keychooser.RETURN_FROM_CHOOSE:
             self.mode = PLAYING
             gui.current_card = None
         if gui.next_card == 3:
@@ -528,7 +528,7 @@ class GluballPlayer():
             if b.parent.ask_key:
                 if self.mode == CHOOSE_KEY: return True
                 self.mode = CHOOSE_KEY
-                gui.last_card = 2
+                gui.last_card = keychooser.RETURN_FROM_CHOOSE
                 keychooser.unit_to_bind = b.parent
                 keychooser.prev_card_func = keychooser.flag_func
                 keychooser.screenshot = pyglet.image.get_buffer_manager().\

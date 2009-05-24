@@ -2,6 +2,8 @@ import pyglet
 from pyglet.window import key
 import env, gui, widget
 
+RETURN_FROM_CHOOSE = 2
+
 class KeyGetter(object):
     def __init__(self, action):
         self.key = -1
@@ -28,11 +30,11 @@ class KeyLabel(pyglet.text.Label):
         self.text = env.symbol_to_string(symbol)
 
 def flag_func():
-    return 2
+    return RETURN_FROM_CHOOSE
 
 screenshot = None
 unit_to_bind = None
-prev_card_func = flag_func
+prev_card_func = gui.go_back_fast
 
 def bind_key_and_return(key):
     env.bind_key(key, unit_to_bind)
