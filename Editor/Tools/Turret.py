@@ -30,7 +30,7 @@ class Turret(tool.Tool):
         )    
         
         images_2 = [
-            getattr(resources, 't_'+level.turret_bases[i][0]) \
+            getattr(resources, 't_turret_base_'+level.turret_bases[i]) \
             for i in range(len(level.turret_bases))
         ]
         functions_2 = [
