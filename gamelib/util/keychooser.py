@@ -33,14 +33,13 @@ prev_card_func = gui.go_back_fast
 
 def bind_key_and_return(key):
     env.bind_key(key, unit_to_bind)
-    gui.go_back_fast()
-    # if prev_card_func == flag_func:
-    #     gui.pop_handlers()
-    #     gui.current_card = flag_func()
-    #     gui.last_card = None
-    #     gui.next_card = None
-    # else:
-    #     gui.change_to_card_fast(gui.Card(prev_card_func()))
+    if hasattr(gui.last_card, 'push_handlers'):
+        gui.go_back_fast()
+    else:    
+        gui.pop_handlers()
+        gui.current_card = gui.last_card
+        gui.last_card = None
+        gui.next_card = None
 
 def widgets():
     background = widget.UnscaledImage(screenshot, 0, 0)

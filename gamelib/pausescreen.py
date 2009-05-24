@@ -279,9 +279,9 @@ def init_pause():
     buffer_manager = pyglet.image.get_buffer_manager()
     screenshot = buffer_manager.get_color_buffer().get_texture()
     keychooser.screenshot = screenshot
-    gui.cards['pause'] = gui.Card(pause_screen_widgets())
+    gui.cards['pause'] = gui.LiveCard(pause_screen_widgets)
     gui.current_card = gui.cards['pause']
     gui.next_card = None
     gui.transition_time = 0
     gui.push_handlers()
-    keychooser.prev_card_func = pause_screen_widgets
+    #keychooser.prev_card_func = pause_screen_widgets

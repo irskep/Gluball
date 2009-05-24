@@ -13,6 +13,7 @@ PLAYING     = 0
 PAUSED      = 1
 CHOOSE_KEY  = 2
 CUTSCENE    = 3
+RETURN_FROM_CHOOSE = 10
 
 debug_draw = False
 
@@ -316,7 +317,7 @@ class GluballPlayer():
         if gui.current_card == 1:
             #unpause
             self.toggle_pause()
-        if gui.current_card == keychooser.RETURN_FROM_CHOOSE:
+        if gui.current_card == RETURN_FROM_CHOOSE:
             self.mode = PLAYING
             gui.current_card = None
         if gui.next_card == 3:
@@ -528,14 +529,12 @@ class GluballPlayer():
             if b.parent.ask_key:
                 if self.mode == CHOOSE_KEY: return True
                 self.mode = CHOOSE_KEY
-                gui.last_card = keychooser.RETURN_FROM_CHOOSE
                 keychooser.unit_to_bind = b.parent
-                keychooser.prev_card_func = keychooser.flag_func
                 keychooser.screenshot = pyglet.image.get_buffer_manager().\
                                         get_color_buffer().get_texture()
                 gui.current_card = gui.Card(keychooser.widgets())
                 gui.next_card = None
-                gui.last_card = None
+                gui.last_card = RETURN_FROM_CHOOSE
                 gui.transition_time = 0
                 gui.push_handlers()
                 for u in physics.unit_update_list:

@@ -40,6 +40,20 @@ class Card(object):
             widget.draw()
     
 
+class LiveCard(Card):
+    def __init__(self, widget_func):
+        super(LiveCard, self).__init__(widget_func())
+        self.widget_func = widget_func
+    
+    def push_handlers(self):
+        self.widgets = self.widget_func()
+        super(LiveCard, self).push_handlers()
+    
+    def refresh(self):
+        self.pop_handlers()
+        self.push_handlers()
+    
+
 def push_handlers():
     global pushed
     #print "pushing", current_card
