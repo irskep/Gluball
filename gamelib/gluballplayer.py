@@ -49,6 +49,8 @@ class GluballPlayer():
         self.loading = False
         pyglet.clock.schedule(self.on_draw)
     
+    
+    #---------CONTEXT CHANGE---------#
     def clean_up(self):
         if self.mode == PAUSED:
             gui.next_card = gui.cards['title']
@@ -114,37 +116,8 @@ class GluballPlayer():
         self.init_post_load()
         level.save()
     
-    def init_collision_funcs(self):
-        #shortcut
-        acpf = physics.space.add_collisionpair_func
-        
-        #player
-        acpf(physics.PLAYER, physics.FREE, self.collide_player_free)
-        acpf(physics.PLAYER, physics.WALL, self.collide_player_wall)
-        acpf(physics.PLAYER, physics.ENEMY_STATIC, self.collide_player_static)
-        acpf(physics.PLAYER, physics.INVISIBLE, self.collide_player_invisible)
-        
-        #player bullets
-        acpf(physics.PLAYER_BULLET, physics.WALL, self.collide_bullet_silent)
-        acpf(physics.PLAYER_BULLET, physics.FREE, self.collide_bullet_with_sound)
-        acpf(physics.PLAYER_BULLET, physics.ENEMY_STATIC, self.collide_bullet_with_sound)
-        acpf(physics.PLAYER_BULLET, physics.PLAYER, self.collide_default)
-        
-        #enemy bullets
-        acpf(physics.ENEMY_BULLET, physics.WALL, self.collide_bullet_silent)
-        acpf(physics.ENEMY_BULLET, physics.FREE, self.collide_bullet_with_sound)
-        acpf(physics.ENEMY_BULLET, physics.PLAYER, self.collide_bullet_with_sound)
-        acpf(physics.ENEMY_BULLET, physics.ENEMY_STATIC, self.collide_default)
-        
-        acpf(physics.PLAYER_BULLET, physics.ENEMY_BULLET, self.collide_default)
-        
-        #ignore invisibles, except player
-        acpf(physics.FREE, physics.INVISIBLE, self.collide_default)
-        acpf(physics.ENEMY_STATIC, physics.INVISIBLE, self.collide_default)
-        acpf(physics.WALL, physics.INVISIBLE, self.collide_default)
-        acpf(physics.PLAYER_BULLET, physics.INVISIBLE, self.collide_default)
-        acpf(physics.ENEMY_BULLET, physics.INVISIBLE, self.collide_default)
     
+    #---------DRAWING/UPDATE---------#
     def on_draw(self,dt=0):
         if env.profiler != None:
             env.profiler.enable()
@@ -337,6 +310,8 @@ class GluballPlayer():
         self.timer_label.text = "%02d:%02d" % (mins, secs)
         self.timer_label.draw()
     
+    
+    #---------MODE---------#
     def check_mode_change(self):
         if gui.current_card == 1:
             #unpause
@@ -381,6 +356,127 @@ class GluballPlayer():
                 event.next_level, 
                 event.keep_ship_config, event.keep_ship_velocity
             )
+    
+    def toggle_pause(self):
+        if self.mode == PLAYING:
+            if level.player == None or event.end_game: return
+            self.mode = PAUSED
+            for u in physics.unit_update_list:
+                if u.uses_keys:
+                    u.deactivate()
+            pausescreen.init_pause()
+            timer.pause()
+            env.main_window.set_mouse_visible(True)
+        elif self.mode == PAUSED:
+            self.mode = PLAYING
+            music.update_volume()
+            gui.current_card = None
+            gui.next_card = None
+            gui.transition_time = 0.0
+            for s, l in env.key_bindings.items():
+                if self.keys[s]:
+                    for u in l:
+                        u.activate()
+            timer.unpause()
+            env.main_window.set_mouse_visible(False)
+            self.fade_countdown = 0.5
+    
+    def check_cutscene(self):        
+        if gui.current_card == 4:
+            self.mode = PLAYING
+            gui.current_card = None
+            for s, l in env.key_bindings.items():
+                if self.keys[s]:
+                    for u in l:
+                        u.activate()
+            level.save()
+            timer.unpause()
+            self.fade_countdown = 0.5
+        if len(event.cutscene_queue) > 0:
+            for u in physics.unit_update_list:
+                if u.uses_keys:
+                    u.deactivate()
+            self.mode = CUTSCENE
+            timer.pause()
+            cutscene_card = cutscene.Cutscene(
+                'Data/Cutscenes/'+event.cutscene_queue[0]+'.txt',
+                gui.state_goer(4)
+            )
+            event.cutscene_queue = event.cutscene_queue[1:]
+            gui.current_card = cutscene_card
+            gui.next_card = None
+            gui.transition_time = 0.5
+    
+    def on_key_press(self, symbol, modifiers):
+        if symbol == key.ESCAPE: return True
+        if self.mode != PLAYING: return
+
+        if symbol == key.Z:
+            if len(level.player.units) > 5:
+                dead_unit = level.player.units[-1]
+                env. unbind_keys_for_unit(dead_unit)
+                level.player.release_unit(dead_unit)
+        else:
+            for u in env.key_bindings[symbol]:
+                u.activate()
+    
+    def on_key_release(self, symbol, modifiers):
+        if self.mode != PLAYING:
+            if gui.current_card == 2:
+                self.mode = PLAYING
+            return
+        elif symbol == key.ESCAPE:
+            self.toggle_pause()
+            return True
+        elif symbol == key.TAB:
+            event.reset_countdown()
+        elif symbol == key.COMMA:
+            global debug_draw
+            debug_draw = not debug_draw
+        for u in env.key_bindings[symbol]:
+            u.deactivate()
+        for s, l in env.key_bindings.items():
+            if s != symbol:
+                if not self.keys[s]:
+                    for u in l:
+                        u.deactivate()
+        for s, l in env.key_bindings.items():
+            if self.keys[s]:
+                for u in l:
+                    u.activate()
+    
+    
+    #---------COLLISIONS---------#
+    def init_collision_funcs(self):
+        #shortcut
+        acpf = physics.space.add_collisionpair_func
+        
+        #player
+        acpf(physics.PLAYER, physics.FREE, self.collide_player_free)
+        acpf(physics.PLAYER, physics.WALL, self.collide_player_wall)
+        acpf(physics.PLAYER, physics.ENEMY_STATIC, self.collide_player_static)
+        acpf(physics.PLAYER, physics.INVISIBLE, self.collide_player_invisible)
+        
+        #player bullets
+        acpf(physics.PLAYER_BULLET, physics.WALL, self.collide_bullet_silent)
+        acpf(physics.PLAYER_BULLET, physics.FREE, self.collide_bullet_with_sound)
+        acpf(physics.PLAYER_BULLET, physics.ENEMY_STATIC, self.collide_bullet_with_sound)
+        acpf(physics.PLAYER_BULLET, physics.PLAYER, self.collide_default)
+        
+        #enemy bullets
+        acpf(physics.ENEMY_BULLET, physics.WALL, self.collide_bullet_silent)
+        acpf(physics.ENEMY_BULLET, physics.FREE, self.collide_bullet_with_sound)
+        acpf(physics.ENEMY_BULLET, physics.PLAYER, self.collide_bullet_with_sound)
+        acpf(physics.ENEMY_BULLET, physics.ENEMY_STATIC, self.collide_default)
+
+        acpf(physics.PLAYER_BULLET, physics.ENEMY_BULLET, self.collide_default)
+        
+        #ignore invisibles, except player
+        acpf(physics.FREE, physics.INVISIBLE, self.collide_default)
+        acpf(physics.ENEMY_STATIC, physics.INVISIBLE, self.collide_default)
+        acpf(physics.WALL, physics.INVISIBLE, self.collide_default)
+        acpf(physics.PLAYER_BULLET, physics.INVISIBLE, self.collide_default)
+        acpf(physics.ENEMY_BULLET, physics.INVISIBLE, self.collide_default)
     
     def play_metal_collision(self, a=None, b=None):
         a = a.parent.gluebody.body.velocity
@@ -484,93 +580,4 @@ class GluballPlayer():
         if rv:
             self.play_wall_collision(a, b)
         return rv
-    
-    def toggle_pause(self):
-        if self.mode == PLAYING:
-            if level.player == None or event.end_game: return
-            self.mode = PAUSED
-            for u in physics.unit_update_list:
-                if u.uses_keys:
-                    u.deactivate()
-            pausescreen.init_pause()
-            timer.pause()
-            env.main_window.set_mouse_visible(True)
-            
-        elif self.mode == PAUSED:
-            self.mode = PLAYING
-            music.update_volume()
-            gui.current_card = None
-            gui.next_card = None
-            gui.transition_time = 0.0
-            for s, l in env.key_bindings.items():
-                if self.keys[s]:
-                    for u in l:
-                        u.activate()
-            timer.unpause()
-            env.main_window.set_mouse_visible(False)
-            self.fade_countdown = 0.5
-    
-    def check_cutscene(self):        
-        if gui.current_card == 4:
-            self.mode = PLAYING
-            gui.current_card = None
-            for s, l in env.key_bindings.items():
-                if self.keys[s]:
-                    for u in l:
-                        u.activate()
-            level.save()
-            timer.unpause()
-            self.fade_countdown = 0.5
-        if len(event.cutscene_queue) > 0:
-            for u in physics.unit_update_list:
-                if u.uses_keys:
-                    u.deactivate()
-            self.mode = CUTSCENE
-            timer.pause()
-            cutscene_card = cutscene.Cutscene(
-                'Data/Cutscenes/'+event.cutscene_queue[0]+'.txt',
-                gui.state_goer(4)
-            )
-            event.cutscene_queue = event.cutscene_queue[1:]
-            gui.current_card = cutscene_card
-            gui.next_card = None
-            gui.transition_time = 0.5
-    
-    def on_key_press(self, symbol, modifiers):
-        if symbol == key.ESCAPE: return True
-        if self.mode != PLAYING: return
-        
-        if symbol == key.Z:
-            if len(level.player.units) > 5:
-                dead_unit = level.player.units[-1]
-                env. unbind_keys_for_unit(dead_unit)
-                level.player.release_unit(dead_unit)
-        else:
-            for u in env.key_bindings[symbol]:
-                u.activate()
-    
-    def on_key_release(self, symbol, modifiers):
-        if self.mode != PLAYING:
-            if gui.current_card == 2:
-                self.mode = PLAYING
-            return
-        elif symbol == key.ESCAPE:
-            self.toggle_pause()
-            return True
-        elif symbol == key.TAB:
-            event.reset_countdown()
-        elif symbol == key.COMMA:
-            global debug_draw
-            debug_draw = not debug_draw
-        for u in env.key_bindings[symbol]:
-            u.deactivate()
-        for s, l in env.key_bindings.items():
-            if s != symbol:
-                if not self.keys[s]:
-                    for u in l:
-                        u.deactivate()
-        for s, l in env.key_bindings.items():
-            if self.keys[s]:
-                for u in l:
-                    u.activate()
     
