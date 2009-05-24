@@ -149,6 +149,28 @@ class GluballPlayer():
         if env.profiler != None:
             env.profiler.enable()
         
+        self.update(dt)
+        self.enter_drawing()
+        
+        if self.mode == PLAYING:
+            self.draw_level()
+            gl.glPopMatrix()
+            self.draw_pointer()
+            self.draw_hud()
+        else:
+            gl.glPopMatrix()
+            gui.draw_card()
+        
+        if env.scale_factor != 1.0:
+            gl.glPopMatrix()
+        
+        if self.collide_sound_delay > 0: self.collide_sound_delay -= 1
+        self.check_mode_change()
+        
+        if env.profiler != None:
+            env.profiler.disable()
+    
+    def update(self, dt):
         #Make dt global
         env.dt = dt
         #Update physics if not paused
@@ -158,12 +180,11 @@ class GluballPlayer():
             physics.step(dt)
         #Update particle system
         particle.update()
-        #Update message queue
-        if self.mode == PLAYING: event.update(dt)
         #Update camera position
         self.move_camera(dt)
         
         if self.mode == PLAYING:
+            event.update(dt)
             for obj in physics.body_update_list:
                 obj.update_physics()
                 obj.update()
@@ -171,7 +192,8 @@ class GluballPlayer():
             for this_unit in physics.unit_update_list:
                 this_unit.update()
             particle.update()
-        
+    
+    def enter_drawing(self):
         #Do some fancy-pants OpenGL stuff
         gl.glLoadIdentity()
         if env.scale_factor != 1.0:
@@ -186,47 +208,6 @@ class GluballPlayer():
             quake_y = random.random()*10.0*event.quake_level*2.0
             quake_y -= 10*event.quake_level
             gl.glTranslatef(quake_x,quake_y,0)
-        
-        if self.mode == PLAYING:
-        
-            self.draw_level()
-            
-            gl.glPopMatrix()
-            
-            if event.point_object != None:
-                self.draw_pointer()
-            else:
-                if self.arrow_sprite.visible:
-                    self.arrow_sprite.visible = False
-            
-            if event.message_countdown > 0: self.draw_message()
-            if event.ai_message_countdown > 0: self.draw_ai_message()
-            if event.active_countdown > 0: self.draw_countdown()
-        
-            self.fps_display.draw()
-            if self.fade_countdown > 0:
-                draw.set_color(1,1,1,self.fade_countdown/0.5)
-                draw.rect(0, 0, env.norm_w, env.norm_h)
-                self.fade_countdown -= dt
-                if self.fade_countdown < 0:
-                    self.fade_countdown = 0
-            if self.mode == PLAYING and (event.fade_out_countdown != -100 or event.stay_black):
-                draw.set_color(0, 0, 0, min(1, event.fade_out_countdown*2))
-                if event.stay_black:
-                    draw.set_color(0,0,0,1)
-                draw.rect(0, 0, env.norm_w, env.norm_h)
-        
-        else:
-            gl.glPopMatrix()
-            gui.draw_card()
-        
-        if env.scale_factor != 1.0:
-            gl.glPopMatrix()
-        
-        if self.collide_sound_delay > 0: self.collide_sound_delay -= 1
-        self.check_mode_change()
-        if env.profiler != None:
-            env.profiler.disable()
     
     def move_camera(self, dt=0):
         if level.player == None: return
@@ -264,6 +245,8 @@ class GluballPlayer():
     
     def draw_pointer(self):
         if level.player == None or event.point_object == None: 
+            if self.arrow_sprite.visible:
+                self.arrow_sprite.visible = False
             return
         p = event.point_object
         if hasattr(p, 'body'):
@@ -293,6 +276,24 @@ class GluballPlayer():
         )
         self.arrow_sprite.rotation = -math.degrees(angle)
         self.arrow_sprite.draw()
+    
+    def draw_hud(self):
+        if event.message_countdown > 0: self.draw_message()
+        if event.ai_message_countdown > 0: self.draw_ai_message()
+        if event.active_countdown > 0: self.draw_countdown()
+        
+        self.fps_display.draw()
+        if self.fade_countdown > 0:
+            draw.set_color(1,1,1,self.fade_countdown/0.5)
+            draw.rect(0, 0, env.norm_w, env.norm_h)
+            self.fade_countdown -= dt
+            if self.fade_countdown < 0:
+                self.fade_countdown = 0
+        if event.fade_out_countdown != -100 or event.stay_black:
+            draw.set_color(0, 0, 0, min(1, event.fade_out_countdown*2))
+            if event.stay_black:
+                draw.set_color(0,0,0,1)
+            draw.rect(0, 0, env.norm_w, env.norm_h)
     
     def draw_message(self):
         if event.message != self.current_message:
