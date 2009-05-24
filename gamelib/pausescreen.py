@@ -81,7 +81,8 @@ class UnitReleaser(UnitProxyButton):
             self.color_mouse = (255, 0, 0, 255)
             self.color_pressed = (128, 0, 0, 255)
             to_release.append(self.unit)
-            self.text = "UNIT WILL BE RELEASED"
+            self.text = "BALL WILL BE RELEASED"
+        self.color = self.color_normal
     
 
 def unpause():
@@ -131,15 +132,6 @@ def pause_screen_widgets():
     #more positional constants
     player_position = ((player_box[0]+player_box[2])/2, player_offset[1])
     
-    #key list
-    #key_list_desc = pyglet.text.Label(
-    #    "Key Bindings",
-    #    font_name='Gill Sans', font_size=24,
-    #    x=env.norm_w//2, y=keylist_y-5,
-    #    anchor_x='center', anchor_y='top',
-    #    color=(0,0,0,255)
-    #)
-    
     #unit proxies
     labels = [proxy_rotate_desc]
     unit_proxies = []
@@ -171,6 +163,7 @@ def pause_screen_widgets():
         newbutton.color_normal = (0, 200, 0, 255)
         newbutton.color_mouse = (0, 255, 0, 255)
         newbutton.color_pressed = (0, 128, 0, 255)
+        newbutton.color = newbutton.color_normal
         return newbutton
     
     kb_x_max = 0
@@ -214,7 +207,7 @@ def pause_screen_widgets():
     labels.extend(add_buttons)
     
     unit_list_desc = pyglet.text.Label(
-        "Units near the top are released first.",
+        "Balls near the top are released first.",
         font_name='Gill Sans', font_size=12,
         x=env.norm_w//2, y=new_label.y-30,
         anchor_x='center', anchor_y='baseline'

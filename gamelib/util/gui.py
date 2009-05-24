@@ -370,6 +370,7 @@ def title_widgets():
         l.color_normal = (60,60,60,255)
         l.color_mouse = (30, 30, 30, 255)
         l.color_pressed = (0, 0, 0, 255)
+        l.color = l.color_normal
     
     widgets = [
         BigThruster(),

@@ -1,18 +1,6 @@
 - !anchor
   point: [25, 25]
   images: [turret1]
-
-- !anchor
-  point: [26, 40]
-  images:
-  - Harvester_1
-  - Harvester_2
-  - Harvester_3
-  - Harvester_4
-  - Harvester_5
-  - Harvester_6
-  - Harvester_7
-  - Harvester_8
   
 
 - !animation
@@ -21,21 +9,6 @@
   mirror: false
   loop: true
   images: [beacon_1, beacon_2, beacon_3, beacon_4, beacon_5, beacon_6, beacon_7]
-
-- !animation
-  name: toxin_anim
-  period: 0.1
-  mirror: true
-  loop: true
-  images: 
-  - Harvester_1
-  - Harvester_2
-  - Harvester_3
-  - Harvester_4
-  - Harvester_5
-  - Harvester_6
-  - Harvester_7
-  - Harvester_8
 
 - !animation
   name: drone

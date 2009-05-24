@@ -217,7 +217,6 @@ class ImageDoor(pyglet.sprite.Sprite):
             decal.decals.append(
                 decal.Decal(mappings.door_types[self.key]['underlay'], x, y, rotation)
             )
-            print rotation
         
         image = mappings.door_types[self.key]['open_static']
         self.door_width = image.width-image.anchor_x*2

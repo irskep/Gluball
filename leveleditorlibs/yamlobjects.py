@@ -200,32 +200,19 @@ class Turret(yaml_obj):
 class NormalTurretA(Turret):
     yaml_tag = u"!NormalTurretA"
 
-class FreeThruster(SimpleObject):
-    yaml_tag = u"!FreeThruster"
+simple_classes = [
+    'FreeBeacon',
+    'FreeBomb',
+    'FreeCargo',
+    'FreeDecoy',
+    'FreeGluballBrain',
+    'FreeRepair',
+    'FreeShield',
+    'FreeThruster',
+    'FreeTurret'
+]
 
-class FreeDecoy(SimpleObject):
-    yaml_tag = u"!FreeDecoy"
-
-class FreeShield(SimpleObject):
-    yaml_tag = u"!FreeShield"
-
-class FreeRepair(SimpleObject):
-    yaml_tag = u"!FreeRepair"
-
-class FreeBeacon(SimpleObject):
-    yaml_tag = u"!FreeBeacon"
-
-class FreeToxin(SimpleObject):
-    yaml_tag = u"!FreeToxin"
-
-class FreeGluballBrain(SimpleObject):
-    yaml_tag = u"!FreeGluballBrain"
-
-class FreeBomb(SimpleObject):
-    yaml_tag = u"!FreeBomb"
-
-class FreeTurret(SimpleObject):
-    yaml_tag = u"!FreeTurret"
-
-class FreeCargo(SimpleObject):
-    yaml_tag = u"!FreeCargo"
+for item in simple_classes:
+    class NewSimpleObject(SimpleObject):
+        yaml_tag = u"!"+item
+    globals()[item] = NewSimpleObject

@@ -34,8 +34,7 @@ REPAIR = 4
 BEACON = 5
 PLASMA = 6
 CARGO = 7
-TOXIN = 8
-BRAIN = 9
+BRAIN = 8
 
 r = resources
 obj_table = {}
@@ -49,7 +48,6 @@ id_table = {
     u"!FreeBeacon": BEACON,
     u"!FreeTurret": PLASMA,
     u"!FreeCargo": CARGO,
-    u"!FreeToxin": TOXIN,
     u"!FreeGluballBrain": BRAIN
 }
 
@@ -69,12 +67,11 @@ def init():
         THRUSTER:   [r.thruster_off,    FreeThruster,   r.FreeThruster],
         DECOY:      [r.logic_static,    FreeDecoy,      r.FreeDecoy],
         BOMB:       [r.bomb_off,        FreeBomb,       r.FreeBomb],
-        SHIELD:     [r.ShieldGenerator, FreeShield,     r.FreeShield],
+        SHIELD:     [r.shield,          FreeShield,     r.FreeShield],
         REPAIR:     [r.repair,          FreeRepair,     r.FreeRepair],
         BEACON:     [r.beacon_1,        FreeBeacon,     r.FreeBeacon],
         PLASMA:     [r.turret1,         FreeTurret,     r.FreeTurret],
         CARGO:      [r.cargo,           FreeCargo,      r.FreeCargo],
-        TOXIN:      [r.Harvester_1,     FreeToxin,      r.FreeToxin],
         BRAIN:      [r.core,            FreeGluballBrain, r.t_core_8]
     }
     turrets = [

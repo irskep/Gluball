@@ -1,0 +1,12 @@
+Burst ball: Sudden thrust
+Halt ball: Sudden stop
+Fly ball: thrusts in random directions
+    Combine with decoy
+Health ball: Instant, not gradual
+Disable ball: Disables any unit it is attached to
+    When health = 0, turns off
+Grav ball: Sucks things toward it
+
+
+Instructions!
+    First time getting any given unit, show its help image

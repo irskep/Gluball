@@ -17,15 +17,17 @@ PLAYING = 1
 class GluballWindow(pyglet.window.Window):
     def __init__(self):
         self.init_window()
-        level.init_entry_points()
-        resources.load(
-            ['Backgrounds', 'Base', 'Decals', 'Destructible', 'Doors', 'Enemies', 
-            'Music', 'Sounds', 'Units', 'Title'], prefix='Data/'
-        )
-        mappings.init()
-        bullet.init()
         
-        self.init_gui()
+        self.load_label = pyglet.text.Label(
+            "Loading...", x=env.norm_w//2, y=env.norm_h//2,
+            font_name='Gill Sans', font_size=48, anchor_x='center',
+            color=(128,128,128,255)
+        )
+        
+        level.init_entry_points()
+        
+        self.load_countdown=3
+        
         settings.set('first_launch', False)
         pyglet.clock.schedule(self.on_draw)
     
@@ -96,27 +98,48 @@ class GluballWindow(pyglet.window.Window):
         #gl.glHint(gl.GL_LINE_SMOOTH_HINT,gl.GL_NICEST);
         gl.glDisable(gl.GL_DEPTH_TEST)
     
+    def init_resources(self):
+        resources.load(
+            ['Backgrounds', 'Base', 'Decals', 'Destructible', 'Doors', 'Enemies', 
+            'Music', 'Sounds', 'Units', 'Title'], prefix='Data/'
+        )
+        mappings.init()
+        bullet.init()
+    
+    def draw_load_screen(self):    
+        gl.glClearColor(1,1,1,1)
+        self.clear()
+        self.load_label.draw()
+    
     def on_draw(self, dt=0):
         env.dt = dt
-        if self.music_countdown > 0:
-            self.music_countdown -= dt
-            if self.music_countdown <= 0:
-                music.new_song('The_Creature_Sneaks')
-        if self.mode == GUI:
-            gl.glLoadIdentity()
-            if env.scale_factor != 1.0:
-                gl.glPushMatrix()
-                env.scale()
+        if self.load_countdown == 0:
+            if self.music_countdown > 0:
+                self.music_countdown -= dt
+                if self.music_countdown <= 0:
+                    music.new_song('The_Creature_Sneaks')
+            if self.mode == GUI:
+                gl.glLoadIdentity()
+                if env.scale_factor != 1.0:
+                    gl.glPushMatrix()
+                    env.scale()
             
-            gl.glClearColor(1,1,1,1)
-            self.clear()
-            gui.draw_card()
-            if gui.current_card == gui.START: self.start_game()
-            if gui.current_card == gui.QUIT: pyglet.app.exit()
-            if gui.current_card == gui.LOAD: self.load_game()
+                gl.glClearColor(1,1,1,1)
+                self.clear()
+                gui.draw_card()
+                if gui.current_card == gui.START: self.start_game()
+                if gui.current_card == gui.QUIT: pyglet.app.exit()
+                if gui.current_card == gui.LOAD: self.load_game()
             
-            if env.scale_factor != 1.0:
-                gl.glPopMatrix()
+                if env.scale_factor != 1.0:
+                    gl.glPopMatrix()
+        elif self.load_countdown > 1:
+            self.draw_load_screen()
+            self.load_countdown -= 1
+        else:    
+            self.init_resources()
+            self.init_gui()
+            self.load_countdown = 0
     
     def start_game(self):
         music.stop()

@@ -623,15 +623,6 @@ class Beacon(Unit):
         self.image = self.image_off
     
 
-class Toxin(Beacon):
-    def __init__(
-                self, body=None, offset=(0,0), rot=0.0, obj_id=0, load_from=None
-            ):
-        super(Toxin, self).__init__(body, offset, rot, obj_id, load_from)
-        self.image_on = resources.toxin_anim
-        self.image_off = resources.Harvester_1
-    
-
 class Thruster(Unit):
     def __init__(
                 self, body=None, offset=(0,0), rot=0.0, obj_id=0, load_from=None

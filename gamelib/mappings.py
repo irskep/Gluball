@@ -31,8 +31,7 @@ def init():
         Repair =            resources.repair, 
         Shield =            resources.shield, 
         Thruster =          resources.thruster_off,
-        Thruster_on =       resources.thruster_on,
-        Toxin =             resources.Harvester_1
+        Thruster_on =       resources.thruster_on
     )
     turret_yaml_types = [
         u'!NormalTurretA'

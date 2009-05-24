@@ -86,7 +86,7 @@ def init():
     ai_message = ""
     ai_message_queue = []
     ai_message_countdown = 0
-    ai_head = resources.core6
+    ai_head = resources.core
     
     timed_funcs = []
     event_time = 0.0
