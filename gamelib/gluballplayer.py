@@ -532,7 +532,7 @@ class GluballPlayer():
                 keychooser.unit_to_bind = b.parent
                 keychooser.screenshot = pyglet.image.get_buffer_manager().\
                                         get_color_buffer().get_texture()
-                gui.current_card = gui.Card(keychooser.widgets())
+                gui.current_card = gui.Card(keychooser.widgets(b.parent.instruction_image))
                 gui.next_card = None
                 gui.last_card = RETURN_FROM_CHOOSE
                 gui.transition_time = 0

@@ -1,6 +1,6 @@
 import time, pyglet, os, math
 import decal, gluballplayer, level
-from util import gui, env, music, physics, resources, save
+from util import gui, env, music, physics, resources, save, serialize
 from collections import defaultdict
 
 shared_flags = {}
@@ -41,6 +41,8 @@ timed_funcs = []
 cutscene_queue = []
 level_flags = {}
 
+instructions_seen = []
+
 active_countdown = 0.0
 counting_down = False
 
@@ -51,6 +53,35 @@ class Point(object):
         
 point_object = None
 point_at_id = 0
+
+def get_yaml_object():
+    try:
+        po = point_object.obj_id
+    except:
+        po = 0
+    event_obj = serialize.YamlEventData(
+        active_countdown=active_countdown,
+        ai_message=ai_message,
+        ai_message_queue=ai_message_queue_as_strings(),
+        ai_message_countdown=ai_message_countdown,
+        ai_head=ai_head.instance_name,
+        attach_funcs=attach_funcs_as_strings(),
+        collision_funcs=collision_funcs_as_strings(),
+        counting_down = counting_down,
+        damage_funcs=damage_funcs_as_strings(),
+        destroy_funcs=destroy_funcs_as_strings(),
+        event_time=event_time,
+        level_flags=level_flags,
+        message=message,
+        message_countdown=message_countdown,
+        message_queue=message_queue,
+        message_size=message_size,
+        music=music.current_track(),
+        release_funcs=release_funcs_as_strings(),
+        point_at=po,
+        shared_flags=shared_flags,
+        timed_funcs=timed_funcs_as_strings()
+    )
 
 #Housekeeping, initialization
 def init():
@@ -159,7 +190,9 @@ def load_from_yaml_obj(obj, func_source):
     global attach_funcs, collision_funcs, destroy_funcs, release_funcs, damage_funcs
     global event_time, level_flags, timed_funcs, point_at_id, point_object
     global message, message_countdown, message_queue, message_size
-    global active_countdown, shared_flags, persist_status
+    global active_countdown, shared_flags, persist_status, instructions_seen
+    
+    instructions_seen = obj.instructions_seen
     
     ai_head = getattr(resources, obj.ai_head)
     ai_message = obj.ai_message

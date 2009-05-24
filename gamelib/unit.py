@@ -21,6 +21,10 @@ class Unit(pyglet.sprite.Sprite):
         self.uses_keys = False
         self.ask_key = False
         self.persistent_attrs = []
+        try:
+            self.instruction_image = getattr(resources, "instr_"+self.__class__.__name__)
+        except:
+            self.instruction_image = None
         
         #self.init_attr('active', False, load_from)
         #Active state is saved but ignored on load.

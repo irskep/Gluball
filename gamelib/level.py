@@ -298,35 +298,9 @@ def save(dest = ""):
     level_set = os.path.split(level_dir)[-1]
     save_path = os.path.join(savegame.save_path, current_level+".yaml")
     savegame.set_current_level(level_set, current_level)
-    try:
-        po = event.point_object.obj_id
-    except:
-        po = 0
+    event_obj = event.get_yaml_object()
     decal_obj = serialize.YamlDecalInvisList(
         [d.obj_id for d in decal.decals if not d.visible]
-    )
-    event_obj = serialize.YamlEventData(
-        active_countdown=event.active_countdown,
-        ai_message=event.ai_message,
-        ai_message_queue=event.ai_message_queue_as_strings(),
-        ai_message_countdown=event.ai_message_countdown,
-        ai_head=event.ai_head.instance_name,
-        attach_funcs=event.attach_funcs_as_strings(),
-        collision_funcs=event.collision_funcs_as_strings(),
-        counting_down = event.counting_down,
-        damage_funcs=event.damage_funcs_as_strings(),
-        destroy_funcs=event.destroy_funcs_as_strings(),
-        event_time=event.event_time,
-        level_flags=event.level_flags,
-        message=event.message,
-        message_countdown=event.message_countdown,
-        message_queue=event.message_queue,
-        message_size=event.message_size,
-        music=music.current_track(),
-        release_funcs=event.release_funcs_as_strings(),
-        point_at=po,
-        shared_flags=event.shared_flags,
-        timed_funcs=event.timed_funcs_as_strings()
     )
     save_list = physics.body_update_list + decal.decals
     level_obj = serialize.YamlLevelData(level_dir, current_level)
