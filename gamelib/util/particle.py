@@ -24,7 +24,7 @@ class FireManager:
         self.delete_me = False
         self.goodies = []
         self.batch = pyglet.graphics.Batch()
-        self.fimg = fire_image
+        self.fimg = resources.fire
         self.group = pyglet.sprite.SpriteGroup(self.fimg.texture,
             blend_src=GL_SRC_ALPHA, blend_dest=GL_ONE)
         self.vertex_list = self.batch.add(4*num, GL_QUADS, self.group,

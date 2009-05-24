@@ -20,11 +20,9 @@ def Door(obj):
     )
 
 def ImageDoor(obj):
-    print obj
     new_door = obstacle.ImageDoor(
         obj.x, obj.y, obj.rotation, obj.obj_id, obj.key
     )
-    print new_door
 
 def Key(obj):
     free_unit = unit.Key(

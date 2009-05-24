@@ -57,9 +57,7 @@ id_table = {
 turrets = []
 
 turret_bases = [
-    ('turret_base', 'normal'),
-    ('Tower1_Static', 'MetalTower'),
-    ('Tower2_Static', 'ConcreteTower')
+    'normal'
 ]
 
 def init():
@@ -71,7 +69,7 @@ def init():
         #real img, class name, icon img
         THRUSTER:   [r.thruster_off,    FreeThruster,   r.FreeThruster],
         DECOY:      [r.logic_static,    FreeDecoy,      r.FreeDecoy],
-        BOMB:       [r.bomb_static,     FreeBomb,       r.FreeBomb],
+        BOMB:       [r.bomb_off,        FreeBomb,       r.FreeBomb],
         SHIELD:     [r.ShieldGenerator, FreeShield,     r.FreeShield],
         REPAIR:     [r.repair,          FreeRepair,     r.FreeRepair],
         BEACON:     [r.beacon_1,        FreeBeacon,     r.FreeBeacon],
@@ -130,7 +128,7 @@ class TurretSprite(pyglet.sprite.Sprite):
         self.turret_type = turret_type
         self.base_type = base_type
         self.base_sprite = pyglet.sprite.Sprite(
-            getattr(resources, turret_bases[base_type][0]), x, y,
+            getattr(resources, "turret_base_"+turret_bases[base_type]), x, y,
             batch=simple_objects_batch, group=lower_group
         )
         super(TurretSprite, self).__init__(
@@ -151,7 +149,7 @@ class TurretSprite(pyglet.sprite.Sprite):
     def get_yaml_copy(self):
         return turrets[self.turret_type][1](
             self.obj_id, self.x, self.y, self.rotation, 
-            turret_bases[self.base_type][1], self.base_sprite.rotation
+            turret_bases[self.base_type], self.base_sprite.rotation
         )
     
 

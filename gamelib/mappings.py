@@ -1,4 +1,4 @@
-from util import resources, particle
+from util import resources
 
 door_types = {}
 unit_images = {}
@@ -7,7 +7,6 @@ unit_special_cases = {}
 
 def init():
     global door_types, unit_images, turret_yaml_types, unit_special_cases
-    particle.fire_image = resources.fire
     door_types[0] = {
         'closed_static': resources.Door_red_closed,
         'open_static': resources.Door_red_open,

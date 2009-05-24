@@ -1,7 +1,6 @@
 import pyglet, pymunk, math, random
 from util import draw, env, physics, resources, serialize, sound
-from mappings import door_types
-import decal, level
+import decal, level, mappings
 
 class Destructible(pyglet.sprite.Sprite):
     def __init__(self, x, y, rot, normal_img, exploded_img):
@@ -212,17 +211,15 @@ class ImageDoor(pyglet.sprite.Sprite):
         self.obj_id = obj_id
         self.key = key
         
-        print 0
         self.range_sq = 300*300
         
-        if door_types[self.key]['underlay'] != None:
+        if mappings.door_types[self.key]['underlay'] != None:
             decal.decals.append(
-                decal.Decal(door_types[self.key]['underlay'], x, y, rotation)
+                decal.Decal(mappings.door_types[self.key]['underlay'], x, y, rotation)
             )
+            print rotation
         
-        print 1
-        
-        image = door_types[self.key]['open_static']
+        image = mappings.door_types[self.key]['open_static']
         self.door_width = image.width-image.anchor_x*2
         self.x2 = x + self.door_width*math.cos(-math.radians(rotation))
         self.y2 = y + self.door_width*math.sin(-math.radians(rotation))
@@ -231,7 +228,6 @@ class ImageDoor(pyglet.sprite.Sprite):
         super(ImageDoor, self).__init__(
             image, x, y, batch=env.batch, group=env.door_group
         )
-        print 2
         self.rotation = rotation
         
         self.segment = pymunk.Segment(
@@ -241,8 +237,6 @@ class ImageDoor(pyglet.sprite.Sprite):
         self.segment.elasticity = physics.default_elasticity
         self.segment.parent = self
         
-        print 3
-        
         self.manual = manual
         self.closed = False
         self.physically_closed = False
@@ -250,11 +244,9 @@ class ImageDoor(pyglet.sprite.Sprite):
         if closed:
             self.close(fast=True)
         else:    
-            door_types[self.key]['open_static']
+            mappings.door_types[self.key]['open_static']
         
         physics.body_update_list.append(self)
-        
-        print 4
     
     def get_yaml_object(self):
         return serialize.YamlImageDoor(
@@ -295,11 +287,11 @@ class ImageDoor(pyglet.sprite.Sprite):
         if not self.closed:
             self.closed = True
             if fast:
-                self.image = door_types[self.key]['closed_static']
+                self.image = mappings.door_types[self.key]['closed_static']
             else:
-                self.image = door_types[self.key]['close_anim']
-                sound.play(door_types[self.key]['sound'])
-                self.swap_countdown = door_types[self.key]['collision_delay_close']
+                self.image = mappings.door_types[self.key]['close_anim']
+                sound.play(mappings.door_types[self.key]['sound'])
+                self.swap_countdown = mappings.door_types[self.key]['collision_delay_close']
     
     def open(self, fast=False):
         if fast and self.physically_closed:
@@ -308,84 +300,13 @@ class ImageDoor(pyglet.sprite.Sprite):
         if self.closed:
             self.closed = False
             if fast:
-                self.image = door_types[self.key]['open_static']
+                self.image = mappings.door_types[self.key]['open_static']
             else:
-                self.image = door_types[self.key]['open_anim']
-                sound.play(door_types[self.key]['sound'])
-                self.swap_countdown = door_types[self.key]['collision_delay_open']
+                self.image = mappings.door_types[self.key]['open_anim']
+                sound.play(mappings.door_types[self.key]['sound'])
+                self.swap_countdown = mappings.door_types[self.key]['collision_delay_open']
     
     def draw_collisions(self):
         if self.physically_closed:
             draw.line(self.x, self.y, self.x2, self.y2)
-    
-
-class Door(object):
-    def __init__(self, x1, y1, x2, y2, obj_id=0, key=0, visible=True):
-        self.x1 = x1
-        self.y1 = y1
-        self.x2 = x2
-        self.y2 = y2
-        self.xm = (x1 + x2)/2
-        self.ym = (y1 + y2)/2
-        self.obj_id = obj_id
-        self.key = key
-        self.visible = visible
-        
-        self.segment = pymunk.Segment(
-            physics.static_body, (x1, y1), (x2, y2), 1
-        )
-        self.segment.collision_type = physics.WALL
-        self.segment.elasticity = physics.default_elasticity
-        self.segment.parent = self
-        
-        self.manual = False
-        self.closed = False
-        self.close()
-        
-        physics.body_update_list.append(self)
-    
-    def get_yaml_object(self):
-        yaml_obj = serialize.YamlDoor(
-            a = (self.x1, self.y1),
-            b = (self.x2, self.y2),
-            key = self.key,
-            obj_id = self.obj_id,
-            visible = self.visible,
-            closed = self.closed
-        )
-        return yaml_obj
-    
-    def update(self):
-        if level.player == None: return
-        xd = (level.player.x - self.xm)
-        yd = (level.player.y - self.ym)
-        if not self.manual:
-            if self.closed:
-                if xd*xd+yd*yd < 200*200:
-                    for unit in level.player.units:
-                        if unit.label == "Key" and unit.number == self.key:
-                            self.open()
-                            return
-            else:
-                if xd*xd+yd*yd >= 200*200 and not self.closed:
-                    self.close()
-    
-    def update_physics(self):
-        pass
-    
-    def close(self):
-        self.closed = True
-        if self.visible:
-            self.vertex_list = env.batch.add(
-                2, pyglet.gl.GL_LINES, env.floor_group,
-                ('v2i', (self.x1, self.y1, self.x2, self.y2)), 
-                ('c4f', resources.key_colors[self.key]*2))
-        physics.space.add_static(self.segment)
-    
-    def open(self):
-        if self.closed:
-            self.closed = False
-            physics.space.remove_static([self.segment])
-            if self.visible:
-                self.vertex_list.delete()
     
