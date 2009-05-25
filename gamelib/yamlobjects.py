@@ -20,7 +20,7 @@ class Env(yaml_obj):
     yaml_tag = u"!Env"
     def __init__(
             self, width, height, player_x, player_y, background_image, 
-            prim_color=(0,0,0,1), player_angle=0.0, player_config='normal'
+            prim_color=(100,100,100,255), player_angle=0.0, player_config='normal'
             ):
         self.width = width
         self.height = height

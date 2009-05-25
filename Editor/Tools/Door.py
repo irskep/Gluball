@@ -13,12 +13,9 @@ class Door(tool.Tool):
         self.snap = False
         self.button_group = gui.ButtonGroup()
         
-        self.doors = [
-            (0, 'Door2_R_Static'),
-            (3, 'Door3_G_Static'),
-            (4, 'Door1_B_1'),
-            (5, 'Door2_P_Static')
-        ]
+        self.doors = []
+        for k, v in level.doors.items():
+            self.doors.append((k,v))
 
         door_buttons = [
             getattr(resources, "t_"+self.doors[i][1]) \
@@ -80,5 +77,5 @@ class Door(tool.Tool):
 default = Door()
 priority = 6
 group = 'Primitives'
-image = resources.t_Door2_R_Static
+image = resources.t_Door_red_closed
 cursor = graphics.cursor['CURSOR_CROSSHAIR']

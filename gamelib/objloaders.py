@@ -1,4 +1,5 @@
 import body, decal, obstacle, unit
+from util import resources
 from yamlobjects import *
 
 def Decal(obj):

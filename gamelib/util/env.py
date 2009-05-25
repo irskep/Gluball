@@ -31,7 +31,7 @@ bullet_group = None
 unit_group = None
 door_group = None
 overlay_group = None
-prim_color = (0,0,0,1)
+prim_color = (0.4, 0.4, 0.4, 1)
 
 def init():
     global key_bindings

@@ -102,3 +102,28 @@ def widgets(extra_image=None):
             key_label,
             getter
         ]
+
+def instr_widgets(extra_image):
+    def go_back():        
+        gui.pop_handlers()
+        gui.current_card = gui.last_card
+        gui.last_card = None
+        gui.next_card = None
+    back_trigger = widget.KeyTrigger(key.RETURN, go_back)    
+    back_trigger_2 = widget.KeyTrigger(key.SPACE, go_back)
+    
+    background = widget.UnscaledImage(screenshot, 0, 0)
+    darken = widget.Rect(0,0,env.norm_w,env.norm_h,(1,1,1,0.7))
+    
+    img_x = env.norm_w//2-extra_image.width/2
+    img_y = 50
+    img_outline = widget.RectOutline(
+        img_x, img_y, extra_image.width, extra_image.height
+    )
+    img_outline.color = (0,0,0,1)
+    image_sprite = pyglet.sprite.Sprite(extra_image, img_x, img_y)
+    return [
+        back_trigger, back_trigger_2,
+        background, darken,
+        image_sprite, img_outline
+    ]

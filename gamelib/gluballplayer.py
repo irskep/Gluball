@@ -526,13 +526,23 @@ class GluballPlayer():
         if self.keys[key.LSHIFT] and b.parent.gluebody.attachable and \
                 b == b.parent.circle:
             a.parent.gluebody.acquire_singlebody(b.parent.gluebody, a.parent)
-            if b.parent.ask_key:
+            if b.parent.ask_key \
+                    or (b.parent.__class__.__name__ not in event.instructions_seen \
+                    and b.parent.instruction_image != None):
                 if self.mode == CHOOSE_KEY: return True
                 self.mode = CHOOSE_KEY
-                keychooser.unit_to_bind = b.parent
                 keychooser.screenshot = pyglet.image.get_buffer_manager().\
                                         get_color_buffer().get_texture()
-                gui.current_card = gui.Card(keychooser.widgets(b.parent.instruction_image))
+                if b.parent.ask_key:
+                    keychooser.unit_to_bind = b.parent
+                    gui.current_card = gui.Card(
+                        keychooser.widgets(b.parent.instruction_image)
+                    )
+                else:
+                    gui.current_card = gui.Card(
+                        keychooser.instr_widgets(b.parent.instruction_image)
+                    )
+                    event.instructions_seen.append(b.parent.__class__.__name__)
                 gui.next_card = None
                 gui.last_card = RETURN_FROM_CHOOSE
                 gui.transition_time = 0
@@ -565,10 +575,9 @@ class GluballPlayer():
     def collide_player_wall(self, a, b, contacts, normal_coef, data):
         if hasattr(b, 'parent'):
             b = b.parent
-        self.play_wall_collision(a, b)
         rv = self.check_collision_func(b, True)
-        if rv:
-            self.play_wall_collision(a, b)
+        #if rv:
+        #    self.play_wall_collision(a, b)
         return rv
     
     def collide_player_invisible(self, a, b, contacts, normal_coef, data):
@@ -576,7 +585,7 @@ class GluballPlayer():
         if hasattr(b, 'parent'):
             b = b.parent
         rv = self.check_collision_func(b, False)
-        if rv:
-            self.play_wall_collision(a, b)
+        #if rv:
+        #    self.play_wall_collision(a, b)
         return rv
     

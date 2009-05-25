@@ -3,32 +3,91 @@
   height: 2000
   player_angle: 1.5700000000000001
   player_config: normal
-  player_x: 892
-  player_y: 198
-  prim_color: !!python/tuple [0, 0, 0, 255]
+  player_x: 373
+  player_y: 179
+  prim_color: !!python/tuple [102, 102, 102, 255]
   width: 2000
-- !Key {number: 0, obj_id: 6, x: 1113, y: 191}
-- !Key {number: 0, obj_id: 7, x: 894, y: 70}
-- !Line {collides: true, obj_id: 16, visible: true, x1: 1450, x2: 1350, y1: 400, y2: 150}
-- !Line {collides: true, obj_id: 17, visible: true, x1: 1600, x2: 1550, y1: 200, y2: 450}
-- !Line {collides: true, obj_id: 18, visible: true, x1: 1300, x2: 1600, y1: 500, y2: 550}
-- !Line {collides: true, obj_id: 19, visible: true, x1: 1500, x2: 1650, y1: 150, y2: 100}
-- !Circle {collides: true, obj_id: 20, radius: 50.0, visible: true, x: 1700, y: 400}
-- !Circle {collides: true, obj_id: 21, radius: 70.710678118654755, visible: true,
-  x: 1700, y: 600}
-- !NormalTurretA {base_rotation: 0, base_type: normal, obj_id: 1, rotation: 0, x: 230,
-  y: 425}
-- !NormalTurretA {base_rotation: 0, base_type: normal, obj_id: 2, rotation: 0, x: 471,
-  y: 329}
-- !NormalTurretA {base_rotation: 0, base_type: normal, obj_id: 3, rotation: 0, x: 606,
-  y: 522}
-- !ImageDoor {key: 0, obj_id: 4, rotation: -5.1325544398729672, x: 779, y: 485}
-- !ImageDoor {key: 0, obj_id: 5, rotation: -29.973948660236047, x: 934, y: 356}
-- !FreeThruster {obj_id: 8, rotation: 0, x: 206, y: 123}
-- !FreeThruster {obj_id: 9, rotation: 90.0, x: 337, y: 130}
-- !FreeDecoy {obj_id: 10, rotation: -0.0, x: 151, y: 213}
-- !FreeDecoy {obj_id: 11, rotation: 0, x: 277, y: 244}
-- !FreeBomb {obj_id: 12, rotation: 0, x: 422, y: 56}
-- !FreeBomb {obj_id: 13, rotation: 0, x: 522, y: 145}
-- !FreeRepair {obj_id: 14, rotation: 0, x: 653, y: 91}
-- !FreeRepair {obj_id: 15, rotation: 0, x: 674, y: 153}
+- !FilledRect {obj_id: 1, visible: true, x1: 200, x2: 0, y1: 0, y2: 600}
+- !FilledRect {obj_id: 2, visible: true, x1: 200, x2: 750, y1: 600, y2: 500}
+- !FilledRect {obj_id: 3, visible: true, x1: 550, x2: 1050, y1: 150, y2: 0}
+- !FilledRect {obj_id: 5, visible: true, x1: 1050, x2: 1150, y1: 0, y2: 600}
+- !FilledRect {obj_id: 7, visible: true, x1: 200, x2: 550, y1: 50, y2: 0}
+- !FilledTriangle {obj_id: 8, visible: true, x1: 400, x2: 750, x3: 400, y1: 600, y2: 600,
+  y3: 1050}
+- !FilledTriangle {obj_id: 9, visible: true, x1: 400, x2: 200, x3: 400, y1: 950, y2: 950,
+  y3: 1050}
+- !FilledTriangle {obj_id: 10, visible: true, x1: 400, x2: 200, x3: 400, y1: 950,
+  y2: 950, y3: 500}
+- !FilledTriangle {obj_id: 4, visible: true, x1: 1050, x2: 1150, x3: 1050, y1: 600,
+  y2: 600, y3: 1000}
+- !FilledTriangle {obj_id: 6, visible: true, x1: 1050, x2: 750, x3: 1050, y1: 1000,
+  y2: 1000, y3: 600}
+- !FilledRect {obj_id: 11, visible: true, x1: 0, x2: 1050, y1: 1500, y2: 1350}
+- !FilledRect {obj_id: 12, visible: true, x1: 750, x2: 1050, y1: 1000, y2: 1100}
+- !FilledTriangle {obj_id: 13, visible: true, x1: 0, x2: 400, x3: 0, y1: 1350, y2: 1350,
+  y3: 1200}
+- !FilledTriangle {obj_id: 14, visible: true, x1: 0, x2: 100, x3: 0, y1: 600, y2: 600,
+  y3: 800}
+- !FilledTriangle {obj_id: 15, visible: true, x1: 400, x2: 200, x3: 400, y1: 550,
+  y2: 550, y3: 750}
+- !FilledTriangle {obj_id: 16, visible: true, x1: 1050, x2: 1100, x3: 1050, y1: 1400,
+  y2: 1400, y3: 1350}
+- !FilledTriangle {obj_id: 17, visible: true, x1: 1050, x2: 1100, x3: 1050, y1: 1400,
+  y2: 1400, y3: 1500}
+- !FilledTriangle {obj_id: 18, visible: true, x1: 650, x2: 1050, x3: 650, y1: 1500,
+  y2: 1500, y3: 1550}
+- !FilledRect {obj_id: 19, visible: true, x1: 650, x2: 0, y1: 1500, y2: 1550}
+- !FilledTriangle {obj_id: 20, visible: true, x1: 0, x2: 250, x3: 0, y1: 1550, y2: 1550,
+  y3: 1800}
+- !FilledTriangle {obj_id: 21, visible: true, x1: 0, x2: 200, x3: 0, y1: 2000, y2: 2000,
+  y3: 1800}
+- !FilledRect {obj_id: 22, visible: true, x1: 300, x2: 1700, y1: 1900, y2: 1850}
+- !FilledTriangle {obj_id: 23, visible: true, x1: 1300, x2: 1200, x3: 1300, y1: 1850,
+  y2: 1850, y3: 1650}
+- !FilledTriangle {obj_id: 24, visible: true, x1: 1300, x2: 1600, x3: 1300, y1: 1850,
+  y2: 1850, y3: 1650}
+- !FilledRect {obj_id: 25, visible: true, x1: 1700, x2: 1650, y1: 1850, y2: 1400}
+- !FilledRect {obj_id: 26, visible: true, x1: 1650, x2: 1300, y1: 1450, y2: 1400}
+- !FilledTriangle {obj_id: 27, visible: true, x1: 200, x2: 300, x3: 200, y1: 50, y2: 50,
+  y3: 150}
+- !FilledTriangle {obj_id: 28, visible: true, x1: 550, x2: 450, x3: 550, y1: 50, y2: 50,
+  y3: 150}
+- !FilledTriangle {obj_id: 29, visible: true, x1: 200, x2: 300, x3: 200, y1: 500,
+  y2: 500, y3: 400}
+- !FilledTriangle {obj_id: 30, visible: true, x1: 1050, x2: 950, x3: 1050, y1: 150,
+  y2: 150, y3: 250}
+- !FilledTriangle {obj_id: 31, visible: true, x1: 1150, x2: 1400, x3: 1150, y1: 0,
+  y2: 0, y3: 250}
+- !FilledRect {obj_id: 33, visible: true, x1: 1700, x2: 1650, y1: 1400, y2: 800}
+- !FilledRect {obj_id: 34, visible: true, x1: 1700, x2: 1100, y1: 800, y2: 600}
+- !FilledRect {obj_id: 35, visible: true, x1: 2000, x2: 1450, y1: 300, y2: 400}
+- !FilledTriangle {obj_id: 32, visible: true, x1: 1350, x2: 1300, x3: 1350, y1: 1400,
+  y2: 1400, y3: 1100}
+- !Key {number: 0, obj_id: 38, x: 1614, y: 1817}
+- !Line {collides: false, obj_id: 48, visible: false, x1: 1950, x2: 1950, y1: 300,
+  y2: 0}
+- !Line {collides: false, obj_id: 50, visible: false, x1: 1450, x2: 1650, y1: 1750,
+  y2: 1750}
+- !Line {collides: false, obj_id: 51, visible: false, x1: 600, x2: 600, y1: 1850,
+  y2: 1550}
+- !Line {collides: false, obj_id: 52, visible: false, x1: 300, x2: 300, y1: 2000,
+  y2: 1900}
+- !Line {collides: false, obj_id: 54, visible: false, x1: 1700, x2: 2000, y1: 1800,
+  y2: 1800}
+- !Decal {img_name: levelup, obj_id: 36, overhead: false, rotation: -0.55625222708067246,
+  scale: 1.0, x: 1834, y: 147}
+- !ImageDoor {key: 0, obj_id: 37, rotation: 0, x: 1350, y: 1152}
+- !FreeBomb {obj_id: 39, rotation: 0, x: 1407, y: 1338}
+- !FreeBomb {obj_id: 40, rotation: 0, x: 1559, y: 1357}
+- !FreeBomb {obj_id: 41, rotation: 0, x: 1577, y: 1252}
+- !FreeBomb {obj_id: 42, rotation: 0, x: 1495, y: 1196}
+- !FreeBomb {obj_id: 43, rotation: 0, x: 1494, y: 1291}
+- !FreeBomb {obj_id: 44, rotation: 0, x: 1418, y: 1240}
+- !DestructibleWall {img_name: Shelf_V, obj_id: 45, rotation: 0, x: 533, y: 1600}
+- !DestructibleWall {img_name: Shelf_V, obj_id: 46, rotation: 0, x: 533, y: 1700}
+- !DestructibleWall {img_name: Shelf_V, obj_id: 47, rotation: 0, x: 533, y: 1800}
+- !NormalTurretA {base_rotation: -90.0, base_type: normal, obj_id: 49, rotation: -90.0,
+  x: 1849, y: 1452}
+- !NormalTurretA {base_rotation: 0.17629414984315739, base_type: normal, obj_id: 53,
+  rotation: 0.17629414984315739, x: 1449, y: 500}
+- !FreeRepair {obj_id: 55, rotation: 0, x: 1851, y: 1151}

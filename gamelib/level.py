@@ -98,7 +98,7 @@ def load_yaml_objects(yaml_objects):
     for obj in yaml_objects:
         try:
             getattr(objloaders, obj.yaml_tag[1:])(obj)
-        except:
+        except TypeError:
             if obj.yaml_tag == u"!Env":
                 player_start_x, player_start_y = obj.player_x, obj.player_y
                 if not hasattr(obj, 'player_angle'):

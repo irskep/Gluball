@@ -21,7 +21,7 @@ player_angle = 1.57
 player_config = 'normal'
 background_image = None
 background_image_name = 'floor_tile'
-prim_color = (0,0,0,1)
+prim_color = (0.4,0.4,0.4,1)
 
 camera_x = 0
 camera_y = 0
@@ -57,8 +57,10 @@ turret_bases = [
     'normal'
 ]
 
+doors = []
+
 def init():
-    global background_image, obj_table, turrets
+    global background_image, obj_table, turrets, doors
     background_image = pyglet.image.TileableTexture.create_for_image(
         getattr(resources, background_image_name)
     )
@@ -77,6 +79,9 @@ def init():
     turrets = [
         ('turret1', NormalTurretA)
     ]
+    doors = {
+        0: 'Door_red_closed'
+    }
 
 class SimpleObjectSprite(pyglet.sprite.Sprite):
     def __init__(self, obj_id, x, y, rotation, obj_type):
@@ -100,15 +105,8 @@ class ImageDoorSprite(pyglet.sprite.Sprite):
         self.obj_id = obj_id
         self.key = key
         
-        door_images = {
-            0: resources.Door2_R_Static,
-            3: resources.Door3_G_Static,
-            4: resources.Door1_B_1,
-            5: resources.Door2_P_Static
-        }
-        
         super(ImageDoorSprite, self).__init__(
-            door_images[key], x, y, batch=simple_objects_batch
+            getattr(resources, doors[key]), x, y, batch=simple_objects_batch
         )
         self.rotation = rotation
     
