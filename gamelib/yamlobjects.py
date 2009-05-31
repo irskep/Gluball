@@ -203,12 +203,14 @@ class NormalTurretA(Turret):
 simple_classes = [
     'FreeBeacon',
     'FreeBomb',
+    'FreeBurstThruster',
     'FreeCargo',
     'FreeDecoy',
     'FreeGluballBrain',
     'FreeRepair',
     'FreeShield',
     'FreeThruster',
+    'FreeTinyThruster',
     'FreeTurret'
 ]
 

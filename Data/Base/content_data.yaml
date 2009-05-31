@@ -2,6 +2,10 @@
   point: [40, 8]
   images: [engine_flame_1]
 
+- !anchor
+  point: [30, 8]
+  images: [engine_flame_2]
+
 - !center_prefixes
   prefixes:
   - bullet

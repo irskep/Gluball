@@ -523,8 +523,9 @@ class GluballPlayer():
     def collide_player_free(self, a, b, contacts, normal_coef, data):
         return_val = True
         self.collided_last.append(b)
-        if self.keys[key.LSHIFT] and b.parent.gluebody.attachable and \
-                b == b.parent.circle:
+        if (self.keys[key.LSHIFT] or b.parent.auto_attach) \
+                and b.parent.gluebody.attachable \
+                and b == b.parent.circle:
             a.parent.gluebody.acquire_singlebody(b.parent.gluebody, a.parent)
             if b.parent.ask_key \
                     or (b.parent.__class__.__name__ not in event.instructions_seen \

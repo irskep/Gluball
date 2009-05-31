@@ -37,7 +37,7 @@ def show_help_4():
     event.show_message("RAM IT.")
 
 def level_up():
-    event.go_to_level("Level_1")
+    event.go_to_level("Level_2")
 
 def init():
     event.register_collision_func(NEXT_LEVEL, level_up)

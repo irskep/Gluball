@@ -1,0 +1,248 @@
+- !Env
+  background_image: floor_tile
+  height: 4000
+  player_angle: 1.5700000000000001
+  player_config: normal
+  player_x: 1853
+  player_y: 1093
+  prim_color: !!python/tuple [102, 102, 102, 255]
+  width: 4000
+- !FilledRect {obj_id: 6, visible: true, x1: 2050, x2: 2750, y1: 900, y2: 300}
+- !FilledRect {obj_id: 9, visible: true, x1: 2750, x2: 3500, y1: 300, y2: 450}
+- !FilledRect {obj_id: 10, visible: true, x1: 3500, x2: 3300, y1: 450, y2: 1550}
+- !FilledTriangle {obj_id: 12, visible: true, x1: 2750, x2: 3300, x3: 2750, y1: 1350,
+  y2: 1350, y3: 1100}
+- !FilledRect {obj_id: 14, visible: true, x1: 2750, x2: 3300, y1: 1350, y2: 1850}
+- !FilledRect {obj_id: 15, visible: true, x1: 2750, x2: 1400, y1: 1650, y2: 1350}
+- !FilledTriangle {obj_id: 16, visible: true, x1: 2750, x2: 2050, x3: 2750, y1: 1350,
+  y2: 1350, y3: 1100}
+- !FilledRect {obj_id: 18, visible: true, x1: 3500, x2: 2950, y1: 300, y2: 0}
+- !Circle {collides: false, obj_id: 21, radius: 70.710678118654755, visible: false,
+  x: 3750, y: 250}
+- !FilledRect {obj_id: 5, visible: true, x1: 1400.0, x2: 1250.0, y1: 1650.0, y2: 300.0}
+- !Line {collides: false, obj_id: 23, visible: false, x1: 1250.0, x2: 1250.0, y1: 300.0,
+  y2: 0.0}
+- !FilledTriangle {obj_id: 24, visible: true, x1: 850.0, x2: 1050.0, x3: 850.0, y1: 0.0,
+  y2: 0.0, y3: 600.0}
+- !FilledTriangle {obj_id: 25, visible: true, x1: 1250.0, x2: 1000.0, x3: 1250.0,
+  y1: 800.0, y2: 800.0, y3: 300.0}
+- !FilledTriangle {obj_id: 26, visible: true, x1: 1250.0, x2: 1000.0, x3: 1250.0,
+  y1: 800.0, y2: 800.0, y3: 1100.0}
+- !FilledRect {obj_id: 27, visible: true, x1: 850.0, x2: 500.0, y1: 600.0, y2: 400.0}
+- !FilledTriangle {obj_id: 28, visible: true, x1: 850.0, x2: 500.0, x3: 850.0, y1: 400.0,
+  y2: 400.0, y3: 250.0}
+- !FilledRect {obj_id: 29, visible: true, x1: 400.0, x2: 200.0, y1: 200.0, y2: 250.0}
+- !FilledRect {obj_id: 30, visible: true, x1: 200.0, x2: 250.0, y1: 250.0, y2: 1100.0}
+- !FilledRect {obj_id: 31, visible: true, x1: 200.0, x2: 1250.0, y1: 1100.0, y2: 1300.0}
+- !FilledTriangle {obj_id: 32, visible: true, x1: 250.0, x2: 750.0, x3: 250.0, y1: 1100.0,
+  y2: 1100.0, y3: 750.0}
+- !FilledTriangle {obj_id: 38, visible: true, x1: 0.0, x2: 100.0, x3: 0.0, y1: 0.0,
+  y2: 0.0, y3: 100.0}
+- !FilledTriangle {obj_id: 1, visible: true, x1: 0.0, x2: 300.0, x3: 0.0, y1: 1650.0,
+  y2: 1650.0, y3: 1450.0}
+- !FilledRect {obj_id: 2, visible: true, x1: 0.0, x2: 950.0, y1: 1650.0, y2: 1800.0}
+- !FilledTriangle {obj_id: 3, visible: true, x1: 1250.0, x2: 1000.0, x3: 1250.0, y1: 1300.0,
+  y2: 1300.0, y3: 1450.0}
+- !FilledRect {obj_id: 42, visible: true, x1: 0.0, x2: 2600.0, y1: 2050.0, y2: 2150.0}
+- !Key {number: 0, obj_id: 45, x: 125.66666666666606, y: 1930.3333333333335}
+- !FilledTriangle {obj_id: 50, visible: true, x1: 2750.0, x2: 2400.0, x3: 2750.0,
+  y1: 1650.0, y2: 1650.0, y3: 1850.0}
+- !FilledTriangle {obj_id: 51, visible: true, x1: 1400.0, x2: 1250.0, x3: 1400.0,
+  y1: 1650.0, y2: 1650.0, y3: 1800.0}
+- !FilledTriangle {obj_id: 52, visible: true, x1: 1400.0, x2: 1500.0, x3: 1400.0,
+  y1: 1650.0, y2: 1650.0, y3: 1800.0}
+- !FilledTriangle {obj_id: 53, visible: true, x1: 600.0, x2: 700.0, x3: 600.0, y1: 1800.0,
+  y2: 1800.0, y3: 1850.0}
+- !FilledTriangle {obj_id: 54, visible: true, x1: 600.0, x2: 400.0, x3: 600.0, y1: 1800.0,
+  y2: 1800.0, y3: 1850.0}
+- !FilledTriangle {obj_id: 55, visible: true, x1: 950.0, x2: 1050.0, x3: 950.0, y1: 2050.0,
+  y2: 2050.0, y3: 2000.0}
+- !FilledTriangle {obj_id: 56, visible: true, x1: 950.0, x2: 800.0, x3: 950.0, y1: 2050.0,
+  y2: 2050.0, y3: 2000.0}
+- !FilledTriangle {obj_id: 57, visible: true, x1: 0.0, x2: 100.0, x3: 0.0, y1: 2050.0,
+  y2: 2050.0, y3: 1950.0}
+- !FilledTriangle {obj_id: 58, visible: true, x1: 0.0, x2: 100.0, x3: 0.0, y1: 1800.0,
+  y2: 1800.0, y3: 1900.0}
+- !FilledTriangle {obj_id: 59, visible: true, x1: 450.0, x2: 200.0, x3: 450.0, y1: 1300.0,
+  y2: 1300.0, y3: 1350.0}
+- !FilledTriangle {obj_id: 60, visible: true, x1: 450.0, x2: 700.0, x3: 450.0, y1: 1300.0,
+  y2: 1300.0, y3: 1350.0}
+- !FilledTriangle {obj_id: 61, visible: true, x1: 850.0, x2: 700.0, x3: 850.0, y1: 1650.0,
+  y2: 1650.0, y3: 1600.0}
+- !FilledTriangle {obj_id: 62, visible: true, x1: 850.0, x2: 950.0, x3: 850.0, y1: 1650.0,
+  y2: 1650.0, y3: 1600.0}
+- !FilledTriangle {obj_id: 63, visible: true, x1: 950.0, x2: 1000.0, x3: 950.0, y1: 1700.0,
+  y2: 1700.0, y3: 1650.0}
+- !FilledTriangle {obj_id: 64, visible: true, x1: 950.0, x2: 1000.0, x3: 950.0, y1: 1700.0,
+  y2: 1700.0, y3: 1800.0}
+- !FilledTriangle {obj_id: 65, visible: true, x1: 250.0, x2: 400.0, x3: 250.0, y1: 250.0,
+  y2: 250.0, y3: 350.0}
+- !FilledTriangle {obj_id: 66, visible: true, x1: 3050.0, x2: 2950.0, x3: 3050.0,
+  y1: 1850.0, y2: 1850.0, y3: 2150.0}
+- !FilledRect {obj_id: 67, visible: true, x1: 3050.0, x2: 3300.0, y1: 1850.0, y2: 2400.0}
+- !FilledTriangle {obj_id: 69, visible: true, x1: 3300.0, x2: 3500.0, x3: 3300.0,
+  y1: 1550.0, y2: 1550.0, y3: 1900.0}
+- !FilledRect {obj_id: 70, visible: true, x1: 2600.0, x2: 2450.0, y1: 2150.0, y2: 2600.0}
+- !FilledRect {obj_id: 71, visible: true, x1: 2450.0, x2: 2900.0, y1: 2600.0, y2: 2800.0}
+- !FilledRect {obj_id: 68, visible: true, x1: 3300.0, x2: 3200.0, y1: 2400.0, y2: 3150.0}
+- !FilledTriangle {obj_id: 73, visible: true, x1: 2600.0, x2: 2900.0, x3: 2600.0,
+  y1: 2600.0, y2: 2600.0, y3: 2400.0}
+- !FilledTriangle {obj_id: 74, visible: true, x1: 3200.0, x2: 3050.0, x3: 3200.0,
+  y1: 2400.0, y2: 2400.0, y3: 2550.0}
+- !FilledTriangle {obj_id: 75, visible: true, x1: 2300.0, x2: 3200.0, x3: 2300.0,
+  y1: 3150.0, y2: 3150.0, y3: 2950.0}
+- !FilledTriangle {obj_id: 76, visible: true, x1: 2150.0, x2: 2300.0, x3: 2150.0,
+  y1: 2950.0, y2: 2950.0, y3: 2450.0}
+- !FilledTriangle {obj_id: 81, visible: true, x1: 2150.0, x2: 2000.0, x3: 2150.0,
+  y1: 2150.0, y2: 2150.0, y3: 2250.0}
+- !FilledTriangle {obj_id: 82, visible: true, x1: 2150.0, x2: 2300.0, x3: 2150.0,
+  y1: 2150.0, y2: 2150.0, y3: 2250.0}
+- !FilledTriangle {obj_id: 83, visible: true, x1: 1650.0, x2: 1850.0, x3: 1650.0,
+  y1: 2150.0, y2: 2150.0, y3: 2350.0}
+- !FilledRect {obj_id: 84, visible: true, x1: 1500.0, x2: 1650.0, y1: 2150.0, y2: 2700.0}
+- !FilledRect {obj_id: 85, visible: true, x1: 2300.0, x2: 900.0, y1: 2950.0, y2: 3150.0}
+- !FilledTriangle {obj_id: 86, visible: true, x1: 2150.0, x2: 1850.0, x3: 2150.0,
+  y1: 2950.0, y2: 2950.0, y3: 2450.0}
+- !FilledTriangle {obj_id: 87, visible: true, x1: 2950.0, x2: 2800.0, x3: 2950.0,
+  y1: 300.0, y2: 300.0, y3: 150.0}
+- !FilledTriangle {obj_id: 88, visible: true, x1: 2950.0, x2: 2800.0, x3: 2950.0,
+  y1: 0.0, y2: 0.0, y3: 150.0}
+- !FilledTriangle {obj_id: 89, visible: true, x1: 850.0, x2: 1050.0, x3: 850.0, y1: 2550.0,
+  y2: 2550.0, y3: 2350.0}
+- !FilledTriangle {obj_id: 90, visible: true, x1: 850.0, x2: 1050.0, x3: 850.0, y1: 2550.0,
+  y2: 2550.0, y3: 2750.0}
+- !FilledTriangle {obj_id: 91, visible: true, x1: 850.0, x2: 650.0, x3: 850.0, y1: 2550.0,
+  y2: 2550.0, y3: 2350.0}
+- !FilledTriangle {obj_id: 92, visible: true, x1: 850.0, x2: 650.0, x3: 850.0, y1: 2550.0,
+  y2: 2550.0, y3: 2750.0}
+- !FilledTriangle {obj_id: 93, visible: true, x1: 1500.0, x2: 1150.0, x3: 1500.0,
+  y1: 2150.0, y2: 2150.0, y3: 2500.0}
+- !FilledTriangle {obj_id: 96, visible: true, x1: 0.0, x2: 600.0, x3: 0.0, y1: 2150.0,
+  y2: 2150.0, y3: 2800.0}
+- !FilledTriangle {obj_id: 97, visible: true, x1: 0.0, x2: 700.0, x3: 0.0, y1: 3350.0,
+  y2: 3350.0, y3: 2600.0}
+- !FilledTriangle {obj_id: 98, visible: true, x1: 1200.0, x2: 900.0, x3: 1200.0, y1: 3150.0,
+  y2: 3150.0, y3: 3600.0}
+- !FilledRect {obj_id: 99, visible: true, x1: 1200.0, x2: 1400.0, y1: 3150.0, y2: 3600.0}
+- !FilledRect {obj_id: 100, visible: true, x1: 1400.0, x2: 400.0, y1: 3600.0, y2: 3750.0}
+- !FilledTriangle {obj_id: 101, visible: true, x1: 400.0, x2: 350.0, x3: 400.0, y1: 3650.0,
+  y2: 3650.0, y3: 3600.0}
+- !FilledTriangle {obj_id: 102, visible: true, x1: 400.0, x2: 350.0, x3: 400.0, y1: 3650.0,
+  y2: 3650.0, y3: 3750.0}
+- !FilledTriangle {obj_id: 103, visible: true, x1: 0.0, x2: 250.0, x3: 0.0, y1: 3350.0,
+  y2: 3350.0, y3: 3600.0}
+- !FilledTriangle {obj_id: 104, visible: true, x1: 0.0, x2: 300.0, x3: 0.0, y1: 4000.0,
+  y2: 4000.0, y3: 3750.0}
+- !FilledTriangle {obj_id: 105, visible: true, x1: 1400.0, x2: 1650.0, x3: 1400.0,
+  y1: 3150.0, y2: 3150.0, y3: 3750.0}
+- !FilledTriangle {obj_id: 106, visible: true, x1: 2050.0, x2: 1900.0, x3: 2050.0,
+  y1: 3150.0, y2: 3150.0, y3: 3650.0}
+- !FilledTriangle {obj_id: 107, visible: true, x1: 2050.0, x2: 2200.0, x3: 2050.0,
+  y1: 3150.0, y2: 3150.0, y3: 3650.0}
+- !FilledTriangle {obj_id: 108, visible: true, x1: 2550.0, x2: 2450.0, x3: 2550.0,
+  y1: 4000.0, y2: 4000.0, y3: 3450.0}
+- !FilledTriangle {obj_id: 109, visible: true, x1: 2550.0, x2: 2650.0, x3: 2550.0,
+  y1: 4000.0, y2: 4000.0, y3: 3450.0}
+- !FilledTriangle {obj_id: 110, visible: true, x1: 3300.0, x2: 2750.0, x3: 3300.0,
+  y1: 3150.0, y2: 3150.0, y3: 3700.0}
+- !FilledTriangle {obj_id: 111, visible: true, x1: 3300.0, x2: 3700.0, x3: 3300.0,
+  y1: 3350.0, y2: 3350.0, y3: 3700.0}
+- !FilledTriangle {obj_id: 112, visible: true, x1: 3300.0, x2: 3700.0, x3: 3300.0,
+  y1: 3350.0, y2: 3350.0, y3: 2750.0}
+- !FilledTriangle {obj_id: 117, visible: true, x1: 4000.0, x2: 3600.0, x3: 4000.0,
+  y1: 4000.0, y2: 4000.0, y3: 3600.0}
+- !FilledTriangle {obj_id: 122, visible: true, x1: 3300.0, x2: 3550.0, x3: 3300.0,
+  y1: 2400.0, y2: 2400.0, y3: 2750.0}
+- !FilledTriangle {obj_id: 123, visible: true, x1: 3300.0, x2: 3550.0, x3: 3300.0,
+  y1: 2400.0, y2: 2400.0, y3: 2050.0}
+- !FilledTriangle {obj_id: 124, visible: true, x1: 4000.0, x2: 3750.0, x3: 4000.0,
+  y1: 2050.0, y2: 2050.0, y3: 2400.0}
+- !FilledTriangle {obj_id: 125, visible: true, x1: 4000.0, x2: 3750.0, x3: 4000.0,
+  y1: 2050.0, y2: 2050.0, y3: 1500.0}
+- !NormalTurretA {base_rotation: -130.85537625889572, base_type: normal, obj_id: 7,
+  rotation: -130.85537625889572, x: 2922, y: 865}
+- !NormalTurretA {base_rotation: -136.21887523513132, base_type: normal, obj_id: 8,
+  rotation: -136.21887523513132, x: 3118, y: 961}
+- !FreeBurstThruster {obj_id: 11, rotation: 89.656915600476466, x: 3027, y: 622}
+- !NormalTurretA {base_rotation: 164.05460409907712, base_type: normal, obj_id: 13,
+  rotation: 164.05460409907712, x: 3129, y: 1130}
+- !Decal {img_name: levelup, obj_id: 19, overhead: false, rotation: 90.0, scale: 1.0,
+  x: 3750, y: 714}
+- !Decal {img_name: target, obj_id: 20, overhead: false, rotation: -0.16277166299312978,
+  scale: 1.0, x: 3751, y: 251}
+- !FreeRepair {obj_id: 22, rotation: 0, x: 2803, y: 134}
+- !Decal {img_name: target, obj_id: 17, overhead: false, rotation: 0.0, scale: 1.0,
+  x: 1325.333333333333, y: 151.66666666666674}
+- !NormalTurretA {base_rotation: 145.46740821327978, base_type: normal, obj_id: 33,
+  rotation: 145.46740821327978, x: 1040.333333333333, y: 1016.6666666666667}
+- !NormalTurretA {base_rotation: 146.41844707819911, base_type: normal, obj_id: 34,
+  rotation: 146.41844707819911, x: 833.33333333333314, y: 1022.6666666666667}
+- !NormalTurretA {base_rotation: 150.30613897408986, base_type: normal, obj_id: 35,
+  rotation: 150.30613897408986, x: 970.33333333333303, y: 870.66666666666674}
+- !NormalTurretA {base_rotation: -170.4399035191137, base_type: normal, obj_id: 36,
+  rotation: -170.4399035191137, x: 767.33333333333314, y: 66.666666666666742}
+- !NormalTurretA {base_rotation: 176.66152945623566, base_type: normal, obj_id: 37,
+  rotation: 176.66152945623566, x: 731.33333333333314, y: 187.66666666666674}
+- !FreeTinyThruster {obj_id: 4, rotation: 177.78320565925981, x: 418.33333333333314,
+  y: 1556.6666666666667}
+- !FreeTinyThruster {obj_id: 39, rotation: 165.49983323344745, x: 552.33333333333314,
+  y: 1593.6666666666667}
+- !FreeTinyThruster {obj_id: 40, rotation: 176.9335144988741, x: 885.33333333333314,
+  y: 1357.6666666666667}
+- !FreeTinyThruster {obj_id: 41, rotation: -179.43273359014208, x: 834.33333333333314,
+  y: 1440.6666666666667}
+- !NormalTurretA {base_rotation: 0.61605990839923019, base_type: normal, obj_id: 43,
+  rotation: 0.61605990839923019, x: 337.66666666666606, y: 1980.3333333333335}
+- !NormalTurretA {base_rotation: 0.43903952568166449, base_type: normal, obj_id: 44,
+  rotation: 0.43903952568166449, x: 742.66666666666606, y: 1870.3333333333335}
+- !DestructibleWall {img_name: Shelf_V, obj_id: 46, rotation: 0, x: 1565.6666666666661,
+  y: 1733.3333333333335}
+- !DestructibleWall {img_name: Shelf_V, obj_id: 47, rotation: 0, x: 1829.6666666666661,
+  y: 1937.3333333333335}
+- !DestructibleWall {img_name: Shelf_V, obj_id: 48, rotation: 0, x: 2223.6666666666661,
+  y: 1749.3333333333335}
+- !DestructibleWall {img_name: Shelf_H, obj_id: 49, rotation: 0, x: 2536.6666666666661,
+  y: 2003.3333333333335}
+- !ImageDoor {key: 0, obj_id: 72, rotation: 0.12564843786168162, x: 2900.333333333333,
+  y: 2785.666666666667}
+- !NormalTurretA {base_rotation: -136.70981404414155, base_type: normal, obj_id: 77,
+  rotation: -136.70981404414155, x: 2376.333333333333, y: 2215.666666666667}
+- !NormalTurretA {base_rotation: -138.12213046211573, base_type: normal, obj_id: 78,
+  rotation: -138.12213046211573, x: 2358.333333333333, y: 2370.666666666667}
+- !NormalTurretA {base_rotation: -52.460566126168352, base_type: normal, obj_id: 79,
+  rotation: -52.460566126168352, x: 1900.333333333333, y: 2242.666666666667}
+- !NormalTurretA {base_rotation: 176.25235502523395, base_type: normal, obj_id: 80,
+  rotation: 176.25235502523395, x: 2912.333333333333, y: 1905.666666666667}
+- !FreeThruster {obj_id: 94, rotation: 170.57623483831631, x: 590.33333333333269,
+  y: 2326.6666666666674}
+- !FreeThruster {obj_id: 95, rotation: -83.395164503246022, x: 1255.3333333333326,
+  y: 2458.6666666666674}
+- !NormalTurretA {base_rotation: -90.285051277583833, base_type: normal, obj_id: 113,
+  rotation: -90.285051277583833, x: 1669.333333333333, y: 3241.0000000000014}
+- !NormalTurretA {base_rotation: -88.775917477823768, base_type: normal, obj_id: 114,
+  rotation: -88.775917477823768, x: 1836.333333333333, y: 3279.0000000000014}
+- !NormalTurretA {base_rotation: -84.18437347050876, base_type: normal, obj_id: 115,
+  rotation: -84.18437347050876, x: 1732.333333333333, y: 3444.0000000000014}
+- !NormalTurretA {base_rotation: -93.477786519798158, base_type: normal, obj_id: 116,
+  rotation: -93.477786519798158, x: 1592.333333333333, y: 3571.0000000000014}
+- !FreeTinyThruster {obj_id: 118, rotation: -87.094079000346667, x: 3512.9999999999986,
+  y: 2799.0000000000023}
+- !FreeTinyThruster {obj_id: 119, rotation: -78.586645653622796, x: 3609.9999999999986,
+  y: 2733.0000000000023}
+- !FreeTinyThruster {obj_id: 120, rotation: -85.382288027506064, x: 3725.9999999999986,
+  y: 2631.0000000000023}
+- !FreeTinyThruster {obj_id: 121, rotation: -93.976730975077572, x: 3951.9999999999986,
+  y: 2795.0000000000023}
+- !NormalTurretA {base_rotation: -84.130399556985296, base_type: normal, obj_id: 126,
+  rotation: -84.130399556985296, x: 3418.9999999999986, y: 1867.0000000000023}
+- !NormalTurretA {base_rotation: -90.0, base_type: normal, obj_id: 127, rotation: -90.0,
+  x: 3665.9999999999986, y: 1876.0000000000023}
+- !DestructibleWall {img_name: Shelf_H, obj_id: 128, rotation: 0, x: 3564.9999999999986,
+  y: 1621.0000000000023}
+- !DestructibleWall {img_name: Shelf_H, obj_id: 129, rotation: 0, x: 3686.9999999999986,
+  y: 1702.0000000000023}
+- !DestructibleWall {img_name: Shelf_H, obj_id: 130, rotation: 0, x: 3902.9999999999986,
+  y: 1552.0000000000023}
+- !FreeBomb {obj_id: 131, rotation: 0, x: 2719.6666666666652, y: 3925.0000000000023}
+- !FreeBomb {obj_id: 132, rotation: -90.0, x: 2892.6666666666652, y: 3915.0000000000023}
+- !FreeBomb {obj_id: 133, rotation: 0, x: 2626.6666666666652, y: 3701.0000000000023}

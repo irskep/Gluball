@@ -97,7 +97,12 @@ class GlueBody(object):
                 unit.die()
                 remove_list.append(unit)
                 sound.play(resources.expl_medium)
-                particle.new_explosion(unit.x, unit.y)
+                particle.new_explosion(
+                    unit.x, unit.y, 
+                    int(30*unit.explosion_size),
+                    int(150*unit.explosion_size),
+                    int(15*unit.explosion_size)
+                )
         
         if self.units[0] in remove_list:
             for unit in self.units:

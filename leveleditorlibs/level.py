@@ -13,8 +13,8 @@ lower_group = pyglet.graphics.OrderedGroup(0)
 upper_group = pyglet.graphics.OrderedGroup(5)
 current_id = 0
 
-width = 50*40
-height = 50*40
+width = 50*80
+height = 50*80
 player_x = 100
 player_y = 100
 player_angle = 1.57
@@ -34,7 +34,8 @@ REPAIR = 4
 BEACON = 5
 PLASMA = 6
 CARGO = 7
-BRAIN = 8
+TINYTHRUSTER = 8
+BURSTTHRUSTER = 9
 
 r = resources
 obj_table = {}
@@ -48,7 +49,8 @@ id_table = {
     u"!FreeBeacon": BEACON,
     u"!FreeTurret": PLASMA,
     u"!FreeCargo": CARGO,
-    u"!FreeGluballBrain": BRAIN
+    u"!FreeTinyThruster": TINYTHRUSTER,
+    u"!FreeBurstThruster": BURSTTHRUSTER
 }
 
 turrets = []
@@ -74,7 +76,8 @@ def init():
         BEACON:     [r.beacon_1,        FreeBeacon,     r.FreeBeacon],
         PLASMA:     [r.turret1,         FreeTurret,     r.FreeTurret],
         CARGO:      [r.cargo,           FreeCargo,      r.FreeCargo],
-        BRAIN:      [r.core,            FreeGluballBrain, r.t_core_8]
+        TINYTHRUSTER: [r.tinythruster,  FreeTinyThruster, r.tinythruster],
+        BURSTTHRUSTER: [r.burst,        FreeBurstThruster, r.t_burst]
     }
     turrets = [
         ('turret1', NormalTurretA)

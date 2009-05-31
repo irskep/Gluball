@@ -20,6 +20,7 @@ class Unit(pyglet.sprite.Sprite):
         self.label = "Generic Unit"
         self.uses_keys = False
         self.ask_key = False
+        self.auto_attach = False
         self.persistent_attrs = []
         try:
             self.instruction_image = getattr(resources, "instr_"+self.__class__.__name__)
@@ -60,6 +61,7 @@ class Unit(pyglet.sprite.Sprite):
         self.line_length = 0
         self.circle2_dist = 0
         self.circle2_rad = 0
+        self.explosion_size = 1.0
         
         self.ignore_death = False
         
@@ -639,11 +641,15 @@ class Thruster(Unit):
         self.uses_keys = True
         self.ask_key = True
         self.logic_req = 25
+        
+        self.on_image = mappings.unit_images['Thruster_on']
+        self.off_image = mappings.unit_images['Thruster']
         #self.line_length = -35
         #self.circle2_rad = 5
         #self.circle2_dist = -27
         
         self.subtract_amt = 1.0
+        self.thrust_amt = physics.default_thrust
         
         self.init_sound(resources.thrust_2, loop=True)
         
@@ -658,8 +664,8 @@ class Thruster(Unit):
         self.flame_sprite.batch = env.batch
     
     def thrust(self, angle, force):
-        impulse = ( force*env.dt*math.cos(angle+math.pi),
-                    force*env.dt*math.sin(angle+math.pi))
+        impulse = ( force*math.cos(angle+math.pi),
+                    force*math.sin(angle+math.pi))
         impulse_offset = (  self.position[0]-self.gluebody.body.position.x,
                             self.position[1]-self.gluebody.body.position.y)
         self.gluebody.body.apply_impulse(impulse, impulse_offset)
@@ -673,7 +679,7 @@ class Thruster(Unit):
                 self.subtract_amt -= env.dt*2
             angle = self.gluebody.body.angle - math.radians(self.local_angle)
             angle += math.pi
-            self.thrust(angle, physics.default_thrust*(1.0-self.subtract_amt))
+            self.thrust(angle, self.thrust_amt*(1.0-self.subtract_amt)*env.dt)
             
             self.flame_sprite.rotation = self.rotation+random.randint(-2,2)
             self.flame_sprite.x, self.flame_sprite.y = self.x, self.y
@@ -685,7 +691,7 @@ class Thruster(Unit):
     
     def activate(self):
         super(Thruster, self).activate()
-        self.image = mappings.unit_images['Thruster_on']
+        self.image = self.on_image
         self.flame_sprite.visible = True
         if env.enable_damping:
             self.subtract_amt = 1.0
@@ -695,6 +701,96 @@ class Thruster(Unit):
     def deactivate(self):
         super(Thruster, self).deactivate()
         if self.active_timer <= 0:
-            self.image = mappings.unit_images['Thruster']
+            self.image = self.off_image
             self.flame_sprite.visible = False
+    
+
+class TinyThruster(Thruster):
+    def __init__(
+                self, body=None, offset=(0,0), rot=0.0, obj_id=0, load_from=None
+            ):
+        self.health = physics.default_health*2
+        super(Thruster, self).__init__(
+            body, offset, rot, mappings.unit_images['TinyThruster'].width/2, 0, 
+            obj_id, None, load_from
+        )
+        self.label = "Tiny Thruster"
+        self.uses_keys = True
+        self.ask_key = True
+        self.logic_req = 25
+        
+        self.subtract_amt = 1.0
+        self.thrust_amt = physics.default_thrust*2
+
+        self.init_sound(resources.thrust_2, loop=True)
+
+        self.flame_sprite = pyglet.sprite.Sprite(
+            resources.engine_flame_2, self.x, self.y,
+            batch=env.batch, group=env.door_group
+        )
+        
+        self.flame_sprite.visible = False
+        self.on_image = mappings.unit_images['TinyThruster']
+        self.off_image = mappings.unit_images['TinyThruster']
+        self.auto_attach = True
+        self.uses_keys = False
+        self.ask_key = False
+        self.explosion_size = 0.3
+        self.thrust_countdown = 5.0
+    
+    def update(self):
+        if self.active:
+            self.thrust_countdown -= env.dt
+            if self.thrust_countdown <= 0:
+                self.deactivate()
+                self.health = 0
+        super(TinyThruster, self).update()
+    
+    def attach(self):
+        self.activate()
+        super(TinyThruster, self).attach()
+
+
+class BurstThruster(Thruster):
+    def __init__(
+                self, body=None, offset=(0,0), rot=0.0, obj_id=0, load_from=None
+            ):
+        self.health = physics.default_health*2
+        super(Thruster, self).__init__(
+            body, offset, rot, mappings.unit_images['BurstThruster'].width/2, 0, 
+            obj_id, None, load_from
+        )
+        self.label = "Burst Thruster"
+        self.uses_keys = True
+        self.ask_key = True
+        self.logic_req = 25
+    
+        self.subtract_amt = 1.0
+        self.thrust_amt = physics.default_thrust*4
+
+        self.init_sound(resources.thrust_2, loop=True)
+
+        self.flame_sprite = pyglet.sprite.Sprite(
+            resources.engine_flame_2, self.x, self.y,
+            batch=env.batch, group=env.door_group
+        )
+        
+        self.flame_sprite.visible = False
+        self.on_image = mappings.unit_images['BurstThruster']
+        self.off_image = mappings.unit_images['BurstThruster']
+        self.explosion_size = 0.3
+        self.thrust_countdown = 5.0
+    
+    def update(self):    
+        if self.thrust_countdown > 0:
+            self.thrust_countdown -= env.dt
+        super(BurstThruster, self).update()
+    
+    def activate(self):
+        angle = self.gluebody.body.angle - math.radians(self.local_angle)
+        angle += math.pi
+        self.thrust(angle, self.thrust_amt)
+    
+    def deactivate(self):
+        return
     

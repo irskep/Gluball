@@ -89,7 +89,7 @@ def init_player(x, y, angle, config='normal'):
 
 def add_free_object(Class, x, y, rot, obj_id=0):
     free_unit = Class(obj_id=obj_id)
-    free_body = body.SingleBody((x, y), rot, free_unit)
+    free_body = body.SingleBody((x, y), -rot, free_unit)
     return free_unit
 
 def load_yaml_objects(yaml_objects):

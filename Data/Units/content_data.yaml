@@ -39,6 +39,7 @@
   prefixes:
   - beacon
   - bomb
+  - burst
   - cargo
   - core
   - decoy
@@ -48,6 +49,7 @@
   - power
   - repair
   - shield
+  - tinythruster
   - thruster
 
 

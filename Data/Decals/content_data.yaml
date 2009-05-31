@@ -1,5 +1,6 @@
 - !center_prefixes
   prefixes:
   - levelup
+  - target
   - tnt
   - turret_base
